@@ -78,11 +78,11 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
     <!-- ===== VIEW: DASHBOARD ===== -->
     <section id="view-dashboard" class="space-y-4">
       <div class="grid grid-cols-5 gap-4">
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Tổng học viên</p><p class="text-2xl font-bold" id="kpiKhoa">248</p><p class="text-xs" style="color:#16A34A">+12 mới</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Lịch học hôm nay</p><p class="text-2xl font-bold" id="kpiHV">18 buổi</p><p class="text-xs">8 đang diễn ra • 10 sắp tới</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Tỷ lệ đậu sát hạch</p><p class="text-2xl font-bold" id="kpiGV">86%</p><p class="text-xs" style="color:#16A34A">+3,2%</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Xe đang sử dụng</p><p class="text-2xl font-bold" id="kpiXe">12/15 xe</p><p class="text-xs" style="color:#DC2626">3 bảo trì</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Doanh thu tháng</p><p class="text-2xl font-bold" id="kpiLich">125,4 triệu</p><p class="text-xs" style="color:#16A34A">+8,5%</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Tổng học viên</p><p class="text-2xl font-bold" id="kpiKhoa">248</p><p class="text-xs" style="color:#16A34A" id="kpiSub1">+12 mới</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Lịch học hôm nay</p><p class="text-2xl font-bold" id="kpiHV">18 buổi</p><p class="text-xs" id="kpiSub2">8 đang diễn ra • 10 sắp tới</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Tỷ lệ đậu sát hạch</p><p class="text-2xl font-bold" id="kpiGV">86%</p><p class="text-xs" style="color:#16A34A" id="kpiSub3">+3,2%</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Xe đang sử dụng</p><p class="text-2xl font-bold" id="kpiXe">12/15 xe</p><p class="text-xs" style="color:#DC2626" id="kpiSub4">3 bảo trì</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Doanh thu tháng</p><p class="text-2xl font-bold" id="kpiLich">125,4 triệu</p><p class="text-xs" style="color:#16A34A" id="kpiSub5">+8,5%</p></div>
       </div>
 
 <div class="card p-4">
@@ -406,8 +406,16 @@ function applyFilter(){ alert('Đã lọc theo TT Sát Hạch → Hệ số → 
 /* Heatmap demo Oct 2026 */
 (function(){ const h=document.getElementById('heatmap'); if(!h) return; for(let d=1;d<=31;d++){ const v=(d*7)%5; const c=['#EBEDF0','#9BE9A8','#40C463','#30A14E','#216E39'][v]; h.innerHTML+='<div title="Ngày '+d+'/10: '+(10+v*8)+' lịch" style="height:26px;border-radius:6px;background:'+c+';display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">'+d+'</div>'; } })();
 /* Dashboard */
+function fmtTr_(n){ n=Number(n)||0; if(n>=1000000000){ const t=n/1000000000; return (Math.round(t*100)/100).toString().replace('.',',')+' tỷ'; } return Math.round(n/1000000)+' triệu'; }
 async function renderDashboard(){
-  try{ const d=await apiGet('action=getDashboardFinal'); if(d.ok){ document.getElementById('kpiKhoa').textContent=d.kpi.khoa+' Khóa'; document.getElementById('kpiHV').textContent=d.kpi.hv+' HV'; document.getElementById('kpiGV').textContent=d.kpi.gv+' GV'; document.getElementById('kpiXe').textContent=d.kpi.xe+' Xe'; document.getElementById('kpiLich').textContent=d.kpi.lichHomNay+' Lịch'; document.getElementById('cbTong').textContent=d.coBang.tong+'/'+d.coBang.tongHV+' ('+d.coBang.phanTram+'%)'; } }
+  try{ const d=await apiGet('action=getDashboardFinal'); if(d.ok){
+    /* Gán số API theo ĐÚNG nhãn từng thẻ của template chuẩn */
+    document.getElementById('kpiKhoa').textContent=d.kpi.hv; document.getElementById('kpiSub1').textContent=d.kpi.khoa+' khóa đang học';
+    document.getElementById('kpiHV').textContent=d.kpi.lichHomNay+' buổi'; document.getElementById('kpiSub2').textContent='LT '+d.kpi.lichLT+' • TH '+d.kpi.lichTH;
+    document.getElementById('kpiGV').textContent=(d.baoCaoSo?d.baoCaoSo.tyLeDo:0)+'%'; document.getElementById('kpiSub3').textContent='DAT TB '+(d.baoCaoSo?d.baoCaoSo.kmDATTB:0)+' km/HV';
+    document.getElementById('kpiXe').textContent=d.kpi.xe+' xe'; document.getElementById('kpiSub4').textContent=d.kpi.gv+' giáo viên phụ trách'; document.getElementById('kpiSub4').style.color='#65676B';
+    document.getElementById('kpiLich').textContent=fmtTr_(d.thuChi.tongThu); document.getElementById('kpiSub5').textContent='Lợi nhuận '+fmtTr_(d.thuChi.loiNhuan)+' ('+d.thuChi.tyLeLoiNhuan+'%)';
+    document.getElementById('cbTong').textContent=d.coBang.tong+'/'+d.coBang.tongHV+' ('+d.coBang.phanTram+'%)'; } }
   catch(e){ /* giữ số demo trên giao diện */ }
 }
 async function refreshAlerts(){ try{ const d=await apiGet('action=checkAllCanhBao'); alert('Quét xong: '+d.total+' cảnh báo (12 loại)'); }catch(e){ alert('Demo: 6 card đỏ phía trên là mẫu. Kết nối API_URL để quét 12 loại cảnh báo thật từ Sheet.'); } }
