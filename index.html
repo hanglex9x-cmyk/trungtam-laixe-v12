@@ -35,7 +35,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
     <p class="text-xs" style="color:#65676B">V12.2 Final • 24 Module • Đa TT Sát Hạch</p>
     <div class="mt-5 space-y-1" id="sidebar24">
       <button class="navbtn active" onclick="showTab('dashboard',this)">📊 21. Lịch tổng quan Sếp</button>
-      <button class="navbtn" onclick="loadModule('TrungTamSatHach',this)">🏢 TT Sát Hạch (TT01 30% • TT02 25%)</button>
+      <button class="navbtn" onclick="loadModule('TrungTamSatHach',this)">🏢 TT Sát Hạch (TT01 30% • TT02 25% • TT03 28%)</button>
       <button class="navbtn" onclick="loadModule('KhoaHoc',this)">📚 1. Khóa học</button>
       <button class="navbtn" onclick="loadModule('HocVien',this)">👨‍🎓 2. Học viên</button>
       <button class="navbtn" onclick="showTab('hoso',this)">🗂️ 3. Hồ sơ đầu vào</button>
@@ -65,7 +65,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
   <main class="ml-[280px] p-6" style="width:calc(100% - 280px);max-width:1280px">
 <div class="card p-4 mb-4 flex items-center justify-between no-print" style="background:#1E40AF;border:none">
       <div><h2 class="text-white font-black text-lg tracking-wide">TRUNG TÂM ĐÀO TẠO LÁI XE</h2><p class="text-xs" style="color:#BFDBFE">Bảng điều khiển tổng quan</p></div>
-      <div class="flex items-center gap-3 text-white text-sm"><span class="px-3 py-2 rounded-lg" style="background:rgba(255,255,255,.15)">📅 Tháng 10 2024</span><span class="font-semibold">👤 Nguyễn Minh Anh</span><button class="px-3 py-2 rounded-lg font-semibold" style="background:#fff;color:#1E40AF" onclick="showTab('caidat')">⚙ Cài đặt</button></div>
+      <div class="flex items-center gap-3 text-white text-sm"><span class="px-3 py-2 rounded-lg" style="background:rgba(255,255,255,.15)">📅 Tháng 10 2026</span><span class="font-semibold">👤 Nguyễn Minh Anh</span><button class="px-3 py-2 rounded-lg font-semibold" style="background:#fff;color:#1E40AF" onclick="showTab('caidat')">⚙ Cài đặt</button></div>
     </div>
         <!-- FILTER 3 CẤP -->
     <div class="card p-4 mb-4 flex gap-3 no-print">
@@ -82,39 +82,33 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
         <div class="card p-4"><p class="text-xs" style="color:#65676B">Lịch học hôm nay</p><p class="text-2xl font-bold" id="kpiHV">…</p><p class="text-xs" id="kpiSub2">Đang tải dữ liệu thật…</p></div>
         <div class="card p-4"><p class="text-xs" style="color:#65676B">Tỷ lệ đậu sát hạch</p><p class="text-2xl font-bold" id="kpiGV">…</p><p class="text-xs" style="color:#16A34A" id="kpiSub3">Đang tải dữ liệu thật…</p></div>
         <div class="card p-4"><p class="text-xs" style="color:#65676B">Xe đang sử dụng</p><p class="text-2xl font-bold" id="kpiXe">…</p><p class="text-xs" style="color:#DC2626" id="kpiSub4">Đang tải dữ liệu thật…</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Doanh thu tháng</p><p class="text-2xl font-bold" id="kpiLich">…</p><p class="text-xs" style="color:#16A34A" id="kpiSub5">Đang tải dữ liệu thật…</p></div>
+        <div class="card p-4"><p class="text-xs" id="kpiLichCap" style="color:#65676B">Doanh thu tháng</p><p class="text-2xl font-bold" id="kpiLich">…</p><p class="text-xs" style="color:#16A34A" id="kpiSub5">Đang tải dữ liệu thật…</p></div>
       </div>
 
 <div class="card p-4">
-        <div class="flex justify-between items-center"><h3 class="font-bold">⚠️ Cảnh báo cần xử lý — 6 cảnh báo đỏ</h3><button class="text-sm font-semibold no-print" style="color:#1E40AF" onclick="showTab('canhbao')">Xem tất cả</button></div>
-        <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">🚗 Xe 51A-12345 sắp hết bảo hiểm 28/10/24 — <b>Còn 5 ngày</b></div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">👨‍🎓 HV Nguyễn Văn A vắng 3 buổi</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">🔧 Xe 07 cần bảo trì quá hạn 2 ngày</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">📉 HV Trần Thị B thi thử &lt;50 điểm</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">🗂️ Hồ sơ Lê Văn C thiếu khám SK — Hạn 25/10/24</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">📅 Lịch K13 chưa có GV phụ trách 30/10/24</div>
+        <div class="flex justify-between items-center"><h3 class="font-bold">⚠️ Cảnh báo cần xử lý — <span id="dashAlertCount">đang tải…</span></h3><button class="text-sm font-semibold no-print" style="color:#1E40AF" onclick="showTab('canhbao')">Xem tất cả</button></div>
+        <div class="grid grid-cols-2 gap-3 mt-3 text-sm" id="dashAlerts"><div class="p-3 rounded-lg" style="background:#FEF3C7">Đang tải cảnh báo thật từ Sheet…</div>
         </div>
       </div>
             <!-- GANTT + HEATMAP + CHART -->
       <div class="grid grid-cols-3 gap-4">
         <div class="card p-4 col-span-2">
-          <h3 class="font-bold">📊 Gantt khóa học 10/2026 – 02/2027 • K12: Lý thuyết (Hoàn thành) • Thực hành (Đang diễn ra) • Mô phỏng (Sắp tới)</h3>
+          <h3 class="font-bold">📊 Gantt khóa học 10/2026 – 02/2027 • Lý thuyết (Hoàn thành) • Thực hành (Đang diễn ra) • Mô phỏng (Sắp tới)</h3>
           <div class="mt-3 space-y-3 text-xs">
             <div><div class="flex justify-between"><span>K51 B2 • Hóc Môn</span><span>120 HV</span></div><div class="bg-gray-200 h-4 rounded"><div class="h-4 rounded" style="width:70%;background:#1E40AF"></div></div></div>
             <div><div class="flex justify-between"><span>K52 B1 • Thành Công</span><span>80 HV</span></div><div class="bg-gray-200 h-4 rounded"><div class="h-4 rounded" style="width:45%;background:#16A34A"></div></div></div>
-            <div><div class="flex justify-between"><span>K53 C • Hóc Môn</span><span>80 HV</span></div><div class="bg-gray-200 h-4 rounded"><div class="h-4 rounded" style="width:30%;background:#F59E0B"></div></div></div>
+            <div><div class="flex justify-between"><span>K53 C • Nam Sài Gòn</span><span>45 HV</span></div><div class="bg-gray-200 h-4 rounded"><div class="h-4 rounded" style="width:30%;background:#F59E0B"></div></div></div>
           </div>
-          <h4 class="font-bold mt-5">🔥 Nhiệt độ lịch học Tháng 10 — Thứ 2 đến CN • Tổng 68 buổi</h4>
+          <h4 class="font-bold mt-5">🔥 Nhiệt độ lịch học Tháng 10 — Thứ 2 đến CN • Tổng <span id="heatmapTotal">…</span> buổi</h4>
           <div class="grid grid-cols-7 gap-1 mt-2" id="heatmap"></div>
         </div>
         <div class="card p-4">
           <h3 class="font-bold">🥧 Tỷ lệ có bằng theo hệ số</h3>
-          <div class="flex items-center justify-center my-3"><div style="width:140px;height:140px;border-radius:50%;background:conic-gradient(#16A34A 0 57%,#1E40AF 57% 86%,#F59E0B 86% 100%)"></div></div>
-          <p class="text-sm">B2 89 • B1 45 • C 22 | Đỗ 92%</p>
+          <div class="flex items-center justify-center my-3"><div id="donutChart" style="width:140px;height:140px;border-radius:50%;background:conic-gradient(#16A34A 0 57%,#1E40AF 57% 86%,#F59E0B 86% 100%)"></div></div>
+          <p class="text-sm" id="donutText">Đang tải…</p>
           <h4 class="font-bold mt-4">🏆 Top GV đỗ cao</h4>
-          <p class="text-sm">Thầy Hùng 95% • Thầy Minh Anh 93% • Cô Lan 91%</p>
-          <div class="mt-3 space-y-2 text-xs"><div>Đỗ <div class="bg-gray-200 h-2 rounded"><div class="h-2 rounded" style="width:92%;background:#16A34A"></div></div></div><div>Trượt <div class="bg-gray-200 h-2 rounded"><div class="h-2 rounded" style="width:8%;background:#DC2626"></div></div></div></div>
+          <p class="text-sm" id="topGV">Đang tải…</p>
+          <div class="mt-3 space-y-2 text-xs"><div>Đỗ <div class="bg-gray-200 h-2 rounded"><div class="h-2 rounded" id="barDo" style="width:92%;background:#16A34A"></div></div></div><div>Trượt <div class="bg-gray-200 h-2 rounded"><div class="h-2 rounded" id="barTruot" style="width:8%;background:#DC2626"></div></div></div></div>
         </div>
       </div>
 
@@ -122,57 +116,48 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
       <div class="card p-4" style="background:#F0FDF4;border-color:#16A34A">
         <h3 class="font-bold" style="color:#166534">✅ HỌC VIÊN CÓ BẰNG — <span id="cbTong">42 được cấp GPLX B2 trong tháng 10 (+5) • Lũy kế 156/280 (55%)</span></h3>
         <div class="grid grid-cols-4 gap-3 mt-3">
-          <div class="bg-white p-3 rounded-lg"><p>B1 Tự động</p><p class="text-xl font-bold">45 HV</p><p class="text-xs">Có bằng T12/26</p></div>
-          <div class="bg-white p-3 rounded-lg" style="border:2px solid #16A34A"><p>B2 Sàn</p><p class="text-xl font-bold">89 HV</p><p class="text-xs">T01/27 • 25 mới &lt;1 tháng</p></div>
-          <div class="bg-white p-3 rounded-lg"><p>C</p><p class="text-xl font-bold">22 HV</p><p class="text-xs">Có bằng T01/27</p></div>
-          <div class="bg-white p-3 rounded-lg"><p>Tỷ lệ đỗ</p><p class="text-xl font-bold">92%</p><p class="text-xs">Thầy Hùng 95%</p></div>
+          <div class="bg-white p-3 rounded-lg"><p>B1 Tự động</p><p class="text-xl font-bold" id="cbB1">…</p><p class="text-xs">Có bằng T12/26</p></div>
+          <div class="bg-white p-3 rounded-lg" style="border:2px solid #16A34A"><p>B2 Sàn</p><p class="text-xl font-bold" id="cbB2">…</p><p class="text-xs">Có bằng T01/27</p></div>
+          <div class="bg-white p-3 rounded-lg"><p>C</p><p class="text-xl font-bold" id="cbC">…</p><p class="text-xs">Có bằng T01/27</p></div>
+          <div class="bg-white p-3 rounded-lg"><p>Tỷ lệ đỗ</p><p class="text-xl font-bold" id="cbTyLe">…</p><p class="text-xs" id="cbTyLeSub">Theo KetQuaThi</p></div>
         </div>
       </div>
 
       <!-- 2 THẺ CẢNH BÁO NHANH + BẢNG LỊCH -->
-      <div class="grid grid-cols-2 gap-4">
-        <div class="card p-4" style="border-left:4px solid #DC2626"><b>🔴 3 HV thiếu DAT sắp thi:</b> HV-1024, HV-1135, HV-1198 — thiếu &lt;100km, hạn 25/10</div>
-        <div class="card p-4" style="border-left:4px solid #F59E0B"><b>🟡 2 GV trùng lịch:</b> GV Minh Anh 09:00 &amp; 14:00 ngày 22/10/2026</div>
-      </div>
+      <div class="grid grid-cols-2 gap-4" id="dashQuick"></div>
       <div class="card p-4">
         <h3 class="font-bold">📅 Bảng chi tiết lịch hôm nay</h3>
         <table class="w-full text-sm mt-2"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">Giờ</th><th class="text-left">Học viên/Khóa</th><th class="text-left">Giáo viên</th><th class="text-left">Loại</th><th class="text-left">Biển số</th><th class="text-left">Trạng thái</th></tr></thead>
-        <tbody><tr class="border-b"><td class="p-2">09:00–11:00</td><td>K51 (cả khóa 120 HV)</td><td>Minh Anh</td><td>Lý thuyết</td><td>—</td><td>Đang học</td></tr><tr class="border-b"><td class="p-2">09:00–11:00</td><td>HV1024</td><td>Minh Anh</td><td>DAT</td><td>51A-12345</td><td><span class="do px-2 py-1 rounded-full text-xs">Trùng lịch</span></td></tr><tr><td class="p-2">14:00–16:00</td><td>HV001</td><td>Hùng</td><td>Thực hành</td><td>51A-12346</td><td>Hoàn thành</td></tr></tbody></table>
+        <tbody id="todayBody"><tr><td class="p-3" colspan="6">Đang tải lịch thật…</td></tr></tbody></table>
       </div>
 
       <!-- 6 CARD CẢNH BÁO ĐỎ -->
       <h3 class="font-bold text-lg">🚨 6 Cảnh Báo Đỏ — Final Patch</h3>
-      <div class="grid grid-cols-3 gap-4" id="cards6">
-        <div class="card p-4" style="border-left:4px solid #DC2626"><span class="text-xs text-white px-2 py-1 rounded-full" style="background:#DC2626">CẢNH BÁO</span><h4 class="font-bold mt-2">Mô Phỏng Cabin 120h</h4><p class="text-sm">Đã học: 102/120h • 85%</p><div class="w-full bg-gray-200 h-2 rounded mt-2"><div class="h-2 rounded" style="width:85%;background:#DC2626"></div></div><p class="text-xs mt-2" style="color:#DC2626">⚠️ Thiếu 18h — Hạn 20/01/2026 — Cấm DAT</p></div>
-        <div class="card p-4" style="border-left:4px solid #DC2626"><span class="text-xs text-white px-2 py-1 rounded-full" style="background:#DC2626">CẢNH BÁO</span><h4 class="font-bold mt-2">Kiểm Tra Điều Kiện</h4><p class="text-sm">Chờ xác minh: 07 HV</p><p class="text-xs mt-2" style="color:#DC2626">⚠️ 3 HV quá tuổi &gt;60 — Kiểm tra CCCD/Hạng bằng cũ</p></div>
-        <div class="card p-4" style="border-left:4px solid #DC2626"><span class="text-xs text-white px-2 py-1 rounded-full" style="background:#DC2626">CẢNH BÁO</span><h4 class="font-bold mt-2">Giấy Phép GV 10 HV</h4><p class="text-sm">Đang dạy: 12/10 HV • 120%</p><div class="w-full bg-gray-200 h-2 rounded mt-2"><div class="h-2 rounded" style="width:100%;background:#DC2626"></div></div><p class="text-xs mt-2" style="color:#DC2626">⚠️ Vượt 2 HV — Tạm dừng nhận mới</p></div>
-        <div class="card p-4" style="border-left:4px solid #DC2626"><span class="text-xs text-white px-2 py-1 rounded-full" style="background:#DC2626">CẢNH BÁO</span><h4 class="font-bold mt-2">Niên Hạn Xe 15 Năm</h4><p class="text-sm">Xe 51A-12345: 15 năm 3 tháng</p><p class="text-xs mt-2" style="color:#DC2626">⚠️ Quá 3 tháng (CẤM) • Quá 5.000km bảo dưỡng • 12.500.000đ</p></div>
-        <div class="card p-4" style="border-left:4px solid #DC2626"><span class="text-xs text-white px-2 py-1 rounded-full" style="background:#DC2626">CẢNH BÁO</span><h4 class="font-bold mt-2">Biến Động HV</h4><p class="text-sm">Tổng 09 trường hợp T01/2026</p><p class="text-xs mt-2"><span class="text-white px-2 py-1 rounded" style="background:#DC2626">Nghỉ 4</span> <span class="text-white px-2 py-1 rounded" style="background:#F59E0B">Bảo lưu 3</span> <span class="text-white px-2 py-1 rounded" style="background:#DC2626">Hoàn 2 • 8.500.000đ</span></p><p class="text-xs mt-2" style="color:#DC2626">⚠️ Duyệt hoàn tiền trước 10/01/2026</p></div>
-        <div class="card p-4" style="border-left:4px solid #DC2626"><span class="text-xs text-white px-2 py-1 rounded-full" style="background:#DC2626">CẢNH BÁO</span><h4 class="font-bold mt-2">Hợp Đồng Chữ Ký Số</h4><p class="text-sm">Chưa ký: 05/32</p><p class="text-xs mt-2" style="color:#DC2626">⚠️ 5 HĐ quá 48h chưa ký — đỏ</p></div>
-      </div>
+      <div class="grid grid-cols-3 gap-4" id="cards6"><div class="card p-4">Đang tải cảnh báo thật…</div></div>
       <div class="flex gap-2 no-print"><button class="px-4 py-2 rounded-lg text-white" style="background:#1E40AF" onclick="window.print()">🖨️ In PDF</button><button class="px-4 py-2 rounded-lg text-white" style="background:#16A34A" onclick="exportExcel('HocVienCoBang')">⬇️ Xuất Excel</button><button class="px-4 py-2 rounded-lg border" onclick="refreshAlerts()">🔄 Quét 12 cảnh báo</button></div>
     </section>
 
     <!-- ===== VIEW: MODULE GENERIC (24 module dùng chung) ===== -->
     <section id="view-module" class="hidden">
-      <div class="tpl-band no-print"><div><h3>📋 DỮ LIỆU MODULE</h3><p>24 Module • Dữ liệu theo sheet cùng tên</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>📋 DỮ LIỆU MODULE</h3><p>24 Module • Dữ liệu theo sheet cùng tên</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <div class="flex justify-between items-center"><h3 class="font-bold" id="moduleTitle">Module</h3><div class="flex gap-2 no-print"><button class="px-3 py-2 rounded-lg text-white text-sm" style="background:#1E40AF" onclick="openAdd()">+ Thêm mới</button><button class="px-3 py-2 rounded-lg text-white text-sm" style="background:#16A34A" onclick="exportExcel(currentSheet)">Xuất Excel</button></div></div>
-        <input id="moduleSearch" placeholder="Tìm kiếm..." class="input-48 border rounded-lg px-3 w-full mt-3" oninput="renderModuleTable()">
+        <input id="moduleSearch" placeholder="Tìm kiếm..." class="input-48 border rounded-lg px-3 w-full mt-3" oninput="modulePage=1;renderModuleTable()">
         <div class="overflow-x-auto mt-3"><table class="w-full text-sm"><thead style="background:#F0F2F5" id="moduleHead"></thead><tbody id="moduleBody"></tbody></table></div>
-        <p class="text-xs mt-2" style="color:#65676B">Dữ liệu thật lấy từ sheet cùng tên qua API. Nếu chưa kết nối API, bảng hiển thị dữ liệu mẫu để demo bán hàng.</p>
+        <div id="modulePager" class="flex items-center gap-2 mt-3 no-print"></div>
+        <p class="text-xs mt-2" style="color:#65676B">Dữ liệu thật lấy từ sheet cùng tên qua API. Thêm/Sửa/Xóa ghi thẳng xuống Sheet và luôn kiểm chứng kết quả trả về.</p>
       </div>
     </section>
 
     <!-- ===== VIEW: CÓ BẰNG ===== -->
     <section id="view-cobang" class="hidden space-y-4">
-      <div class="tpl-band no-print"><div><h3>✅ HỌC VIÊN CÓ BẰNG + ZALO</h3><p>Module 18 • XONG xanh lá • Nhóm theo tháng • Zalo OA 3 kịch bản</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>✅ HỌC VIÊN CÓ BẰNG + ZALO</h3><p>Module 18 • XONG xanh lá • Nhóm theo tháng • Zalo OA 3 kịch bản</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <h3 class="font-bold">📋 DANH SÁCH HỌC VIÊN ĐÃ CÓ BẰNG — XONG ✅</h3>
         <div class="flex gap-2 mt-3 mb-3 no-print">
-          <select id="cbFilterHe" class="border rounded-lg p-2"><option value="">Tất cả Hệ số</option><option>B1</option><option>B2</option><option>C</option></select>
-          <select id="cbFilterTT" class="border rounded-lg p-2"><option value="">Tất cả TT</option><option>TT01</option><option>TT02</option></select>
-          <select id="cbFilterZalo" class="border rounded-lg p-2"><option value="">Tất cả Zalo</option><option>Chưa gửi</option><option>Đã gửi</option></select>
+          <select id="cbFilterHe" class="border rounded-lg p-2" onchange="renderHocVienCoBang()"><option value="">Tất cả Hệ số</option><option>B1</option><option>B2</option><option>C</option></select>
+          <select id="cbFilterTT" class="border rounded-lg p-2" onchange="renderHocVienCoBang()"><option value="">Tất cả TT</option><option>TT01</option><option>TT02</option><option>TT03</option></select>
+          <select id="cbFilterZalo" class="border rounded-lg p-2" onchange="renderHocVienCoBang()"><option value="">Tất cả Zalo</option><option>Chưa gửi</option><option>Đã gửi</option></select>
           <button class="text-white px-4 py-2 rounded-lg" style="background:#16A34A" onclick="exportExcel('HocVienCoBang')">Xuất Excel DS Có Bằng</button>
         </div>
         <div class="overflow-x-auto"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">Tên</th><th class="text-left">Hệ số</th><th class="text-left">TT Sát Hạch</th><th class="text-left">Ngày có bằng</th><th class="text-left">Số bằng</th><th class="text-left">Nhóm</th><th class="text-left">Zalo</th><th class="text-left">Trạng thái</th><th class="text-left">Hành động</th></tr></thead><tbody id="cobangBody"></tbody></table></div>
@@ -192,7 +177,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 
     <!-- ===== VIEW: HỒ SƠ ĐẦU VÀO (Module 3) ===== -->
     <section id="view-hoso" class="hidden space-y-4">
-      <div class="tpl-band no-print"><div><h3>🗂️ HỒ SƠ ĐẦU VÀO</h3><p>Module 3 • Checklist giấy tờ • Hạn bổ sung 30/10</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>🗂️ HỒ SƠ ĐẦU VÀO</h3><p>Module 3 • Checklist giấy tờ • Hạn bổ sung 30/10</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <h3 class="font-bold">🗂️ HỒ SƠ ĐẦU VÀO — Checklist giấy tờ</h3>
         <div class="overflow-x-auto mt-3"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">CCCD</th><th class="text-left">Khám SK</th><th class="text-left">Ảnh 3x4</th><th class="text-left">Đơn đề nghị</th><th class="text-left">Lý lịch</th><th class="text-left">Hạn bổ sung</th><th class="text-left">Hành động</th></tr></thead><tbody id="hosoBody"></tbody></table></div>
@@ -202,9 +187,10 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 
     <!-- ===== VIEW: KẾT QUẢ THI (Module 17) ===== -->
     <section id="view-ketqua" class="hidden space-y-4">
-      <div class="tpl-band no-print"><div><h3>📝 KẾT QUẢ THI</h3><p>Module 17 • LT 28/30 • MP 45/50 • SH 85/100 • ĐT 90/100</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>📝 KẾT QUẢ THI</h3><p>Module 17 • LT 28/30 • MP 45/50 • SH 85/100 • ĐT 90/100</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <h3 class="font-bold">📝 KẾT QUẢ THI — Phiếu điểm chi tiết</h3>
+        <div class="mt-3 no-print"><select id="kqFilterKhoa" class="border rounded-lg p-2" onchange="renderKetQuaThi()"><option value="">Tất cả khóa</option><option>K51</option><option>K52</option><option>K53</option></select></div>
         <div class="overflow-x-auto mt-3"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">LT /30</th><th class="text-left">MP /50</th><th class="text-left">SH /100</th><th class="text-left">ĐT /100</th><th class="text-left">Kết quả</th><th class="text-left">Ngày thi</th><th class="text-left">Ngày có bằng</th><th class="text-left">Số bằng</th><th class="text-left">Hành động</th></tr></thead><tbody id="ketquaBody"></tbody></table></div>
         <p class="text-xs mt-2" style="color:#65676B">Trượt môn nào hệ thống tự xếp lịch thi lại môn đó. Đạt + có số bằng: bấm Gửi Zalo chúc mừng để chạy capNhatCoBang → XONG xanh lá.</p>
       </div>
@@ -212,12 +198,12 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 
     <!-- ===== VIEW: THU CHI (Module 19) ===== -->
     <section id="view-thuchi" class="hidden space-y-4">
-      <div class="tpl-band no-print"><div><h3>💰 THU CHI</h3><p>Module 19 • Thu 450tr • Chi 280tr • Lợi nhuận 170tr (37,7%)</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>💰 THU CHI</h3><p>Module 19 • Thu 450tr • Chi 280tr • Lợi nhuận 170tr (37,7%)</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="grid grid-cols-4 gap-4">
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">TỔNG THU</p><p class="text-2xl font-bold" style="color:#1E40AF">450tr</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">TỔNG CHI</p><p class="text-2xl font-bold" style="color:#DC2626">280tr</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">LỢI NHUẬN = THU − CHI</p><p class="text-2xl font-bold" style="color:#16A34A">170tr • 37,7%</p></div>
-        <div class="card p-4" style="border-left:4px solid #DC2626"><p class="text-xs" style="color:#65676B">CÒN PHẢI THU</p><p class="text-2xl font-bold">85tr</p><p class="text-xs" style="color:#DC2626">12 HV nợ quá 30 ngày</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">TỔNG THU</p><p class="text-2xl font-bold" style="color:#1E40AF" id="tcThu">…</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">TỔNG CHI</p><p class="text-2xl font-bold" style="color:#DC2626" id="tcChi">…</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">LỢI NHUẬN = THU − CHI</p><p class="text-2xl font-bold" style="color:#16A34A" id="tcLN">…</p></div>
+        <div class="card p-4" style="border-left:4px solid #DC2626"><p class="text-xs" style="color:#65676B">CÒN PHẢI THU</p><p class="text-2xl font-bold" id="tcNo">…</p><p class="text-xs" style="color:#DC2626">12 HV nợ quá 30 ngày</p></div>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div class="card p-4"><h3 class="font-bold">🥧 Cơ cấu chi 280tr</h3><div class="flex items-center gap-4 mt-3"><div style="width:130px;height:130px;border-radius:50%;background:conic-gradient(#1E40AF 0 64%,#F59E0B 64% 100%)"></div><p class="text-sm">Lương GV 180tr • 64%<br>Xăng + Sửa xe + Thuê sân 100tr • 36%<br>Trong chi có trả TT sát hạch 30%</p></div></div>
@@ -234,7 +220,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
           <tr class="border-b"><td class="p-2">01/10/2026</td><td>Thu L1</td><td>HD001-L1 HV001 thu lần 1</td><td>—</td><td>+10.000.000</td><td>10.000.000</td></tr>
           <tr class="border-b"><td class="p-2">15/10/2026</td><td>Thu L2</td><td>HD001-L2 HV001 thu lần 2 — đủ</td><td>—</td><td>+10.000.000</td><td>0</td></tr>
           <tr class="border-b"><td class="p-2">05/10/2026</td><td>Chi Xăng</td><td>Xăng xe tập lái K51</td><td>51A-12345 / GV Hùng</td><td>−3.500.000</td><td>—</td></tr>
-          <tr class="border-b"><td class="p-2">10/10/2026</td><td>Chi Sửa xe</td><td>Bảo dưỡng quá 5.000km</td><td>51A-12345</td><td>−12.500.000</td><td>—</td></tr>
+          <tr class="border-b"><td class="p-2">10/10/2026</td><td>Chi Sửa xe</td><td>Bảo dưỡng quá 5.000km</td><td>51C-34567</td><td>−12.500.000</td><td>—</td></tr>
           <tr><td class="p-2">31/10/2026</td><td>Lương GV</td><td>GV Hùng: giờ dạy + km DAT</td><td>GV01 Hùng</td><td>Theo BangLuongGV</td><td>—</td></tr>
         </tbody></table>
         <div class="flex gap-2 mt-3 no-print"><button class="px-4 py-2 rounded-lg text-white" style="background:#16A34A" onclick="loadModule('HoaDon')">Mở Hóa đơn</button><button class="px-4 py-2 rounded-lg text-white" style="background:#1E40AF" onclick="loadModule('BangLuongGV')">Bảng lương GV</button><button class="px-4 py-2 rounded-lg border" onclick="window.print()">In báo cáo</button></div>
@@ -243,22 +229,22 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 
     <!-- ===== VIEW: BÁO CÁO SỞ GTVT (Module 20) ===== -->
     <section id="view-baocao" class="hidden space-y-4">
-      <div class="tpl-band no-print"><div><h3>📑 BÁO CÁO SỞ GTVT</h3><p>Module 20 • Mẫu Sở GTVT • Đỗ 92% • KM DAT trung bình</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>📑 BÁO CÁO SỞ GTVT</h3><p>Module 20 • Mẫu Sở GTVT • Đỗ 92% • KM DAT trung bình</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4"><h3 class="font-bold">📑 BÁO CÁO SỞ GTVT</h3>
         <div class="grid grid-cols-4 gap-3 mt-3">
-          <div class="p-3 rounded-lg" style="background:#F0F2F5"><p class="text-xs">Tổng HV đào tạo</p><p class="text-xl font-bold">1.248</p></div>
-          <div class="p-3 rounded-lg" style="background:#F0F2F5"><p class="text-xs">Tỷ lệ đỗ</p><p class="text-xl font-bold">92%</p></div>
-          <div class="p-3 rounded-lg" style="background:#F0F2F5"><p class="text-xs">KM DAT trung bình/HV</p><p class="text-xl font-bold">780 km</p></div>
+          <div class="p-3 rounded-lg" style="background:#F0F2F5"><p class="text-xs">Tổng HV đào tạo</p><p class="text-xl font-bold" id="bcTong">…</p></div>
+          <div class="p-3 rounded-lg" style="background:#F0F2F5"><p class="text-xs">Tỷ lệ đỗ</p><p class="text-xl font-bold" id="bcTyLe">…</p></div>
+          <div class="p-3 rounded-lg" style="background:#F0F2F5"><p class="text-xs">KM DAT trung bình/HV</p><p class="text-xl font-bold" id="bcKm">…</p></div>
           <div class="p-3 rounded-lg" style="background:#F0F2F5"><p class="text-xs">Mẫu số</p><p class="text-xl font-bold">Mẫu Sở GTVT</p></div>
         </div>
-        <div class="flex gap-2 mt-4 no-print"><button class="px-4 py-2 rounded-lg text-white" style="background:#16A34A" onclick="exportExcel('HocVien')">Xuất Excel mẫu Sở GTVT</button><button class="px-4 py-2 rounded-lg border" onclick="window.print()">In PDF</button></div>
+        <div class="flex gap-2 mt-4 no-print"><button class="px-4 py-2 rounded-lg text-white" style="background:#16A34A" onclick="exportBaoCao()">Xuất Excel mẫu Sở GTVT</button><button class="px-4 py-2 rounded-lg border" onclick="window.print()">In PDF</button></div>
         <p class="text-xs mt-2" style="color:#65676B">Số liệu lấy từ HocVien + KetQuaThi + TongHopDAT qua action baoCaoSoGTVT() trong Code.gs.</p>
       </div>
     </section>
 
     <!-- ===== VIEW: IN ẤN (Module 22) ===== -->
     <section id="view-inan" class="hidden">
-      <div class="tpl-band no-print"><div><h3>🖨️ IN ẤN</h3><p>Module 22 • Danh sách thi • Sổ GTVT • Biên bản DAT • Phiếu điểm</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>🖨️ IN ẤN</h3><p>Module 22 • Danh sách thi • Sổ GTVT • Biên bản DAT • Phiếu điểm</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4"><h3 class="font-bold">🖨️ IN ẤN</h3>
         <div class="grid grid-cols-3 gap-3 mt-3">
           <button class="p-4 rounded-lg border font-semibold" onclick="window.print()">Danh sách thi</button>
@@ -275,21 +261,10 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 
     <!-- ===== VIEW: CẢNH BÁO TỰ ĐỘNG (Module 23) ===== -->
     <section id="view-canhbao" class="hidden">
-      <div class="tpl-band no-print"><div><h3>🚨 CẢNH BÁO TỰ ĐỘNG</h3><p>Module 23 • checkAllCanhBao() • 12 loại cảnh báo</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
-      <div class="card p-4"><h3 class="font-bold">🚨 CẢNH BÁO TỰ ĐỘNG — 12 LOẠI (checkAllCanhBao)</h3>
-        <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">1. Cabin 102/120h 85% thiếu 18h hạn 20/01 — Cấm DAT</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">2. Điều kiện: 07 HV chờ, 3 quá tuổi &gt;60</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">3. Giấy phép GV 12/10 120% vượt 2 — Tạm dừng</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">4. Niên hạn xe 15y3m quá 3 tháng CẤM + quá 5.000km ĐỎ 12,5tr</div>
-          <div class="p-3 rounded-lg" style="background:#FEF3C7">5. Biến động 09: Nghỉ 4, Bảo lưu 3, Hoàn 2 — 8,5tr duyệt trước 10/01</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">6. Hợp đồng 05/32 chưa ký, 5 quá 48h</div>
-          <div class="p-3 rounded-lg" style="background:#FEF3C7">7. Hồ sơ thiếu/hết hạn — hạn bổ sung 30/10</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">8. DAT thiếu &lt;100km mà 7 ngày thi</div>
-          <div class="p-3 rounded-lg" style="background:#FEE2E2">9. Trùng lịch GV Minh Anh 09:00 &amp; 14:00 ngày 22/10</div>
-          <div class="p-3 rounded-lg" style="background:#FEF3C7">10. Thu còn nợ 85tr — 12 HV quá 30 ngày</div>
-          <div class="p-3 rounded-lg" style="background:#DCFCE7">11. Có bằng → tự động XONG xanh lá + HocVienCoBang + Zalo</div>
-          <div class="p-3 rounded-lg" style="background:#FEF3C7">12. Zalo chưa gửi — sendZaloOA() gửi lại</div>
+      <div class="tpl-band no-print"><div><h3>🚨 CẢNH BÁO TỰ ĐỘNG</h3><p>Module 23 • checkAllCanhBao() • 12 loại cảnh báo</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
+      <div class="card p-4"><h3 class="font-bold">🚨 CẢNH BÁO TỰ ĐỘNG — 12 LOẠI (checkAllCanhBao) <span id="canhBaoTotal"></span></h3>
+        <div class="grid grid-cols-2 gap-3 mt-3 text-sm" id="canhBaoList">
+          <div class="p-3 rounded-lg" style="background:#FEF3C7">Đang tải cảnh báo thật…</div>
         </div>
         <button class="mt-4 px-4 py-2 rounded-lg text-white no-print" style="background:#DC2626" onclick="refreshAlerts()">Quét lại ngay</button>
       </div>
@@ -297,7 +272,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 
     <!-- ===== VIEW: CÀI ĐẶT ===== -->
     <section id="view-caidat" class="hidden space-y-4">
-      <div class="tpl-band no-print"><div><h3>⚙️ PHÂN QUYỀN + LỊCH SỬ + CẤU HÌNH</h3><p>Module 24 • Sếp / Quản lý / Kế toán / GV / HV</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>⚙️ PHÂN QUYỀN + LỊCH SỬ + CẤU HÌNH</h3><p>Module 24 • Sếp / Quản lý / Kế toán / GV / HV</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4"><h3 class="font-bold">⚙️ Cài đặt</h3>
         <label class="text-sm font-semibold mt-3 block">Màu chủ đạo (lưu vào Sheet CauHinh của dự án này)</label>
         <input type="color" id="colorPicker" value="#1E40AF" class="w-20 h-12">
@@ -308,7 +283,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
         <label class="text-sm font-semibold mt-3 block">Zalo OA Token</label>
         <input id="zaloToken" placeholder="Để trống = chỉ ghi log, chưa gửi thật" class="input-48 border rounded-lg px-3 w-full">
         <label class="text-sm font-semibold mt-3 block">Phân quyền</label>
-        <p class="text-sm">Sếp / Quản lý / Kế toán / GV / HV — sheet PhanQuyen. Sếp: thay lái lo; Quản lý: xếp lịch; Kế toán: thu tiền; GV: chỉ xem lịch của mình; HV: chỉ xem lịch khóa mình. Mọi thao tác ghi LichSu (Thời gian • Hành động • Mã đối tượng • Người làm). Backup 2h sáng: autoBackup().</p>
+        <p class="text-sm">Sếp / Quản lý / Kế toán / GV / HV — sheet PhanQuyen. Sếp: toàn quyền; Quản lý: xếp lịch; Kế toán: thu tiền; GV: chỉ xem lịch của mình; HV: chỉ xem lịch khóa mình. Mọi thao tác ghi LichSu (Thời gian • Hành động • Mã đối tượng • Người làm). Backup 2h sáng: autoBackup().</p>
         <button class="mt-3 px-4 py-2 rounded-lg text-white" style="background:#1E40AF" onclick="saveSettings()">Lưu cài đặt</button>
       </div>
     </section>
@@ -317,11 +292,11 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 
 <!-- ============ MOBILE ============ -->
 <div class="md:hidden p-4 space-y-4">
-  <div class="card p-4"><h2 class="font-bold">📊 Tổng quan hôm nay</h2><p class="text-sm">45 lịch • Hoàn thành 29/45 (65%)</p></div>
-  <div class="card p-4" style="background:#F0FDF4"><h3 class="font-bold" style="color:#166534">✅ HV Có Bằng 156/280 (55%)</h3><p class="text-sm">B2 89 HV • Mới &lt;1 tháng: 25 HV cần kiểm tra Zalo</p><button class="mt-2 w-full py-3 rounded-lg text-white font-bold" style="background:#16A34A" onclick="document.getElementById('maHVCoBang')?.focus();window.scrollTo(0,document.body.scrollHeight)">+ Nhập có bằng</button></div>
+  <div class="card p-4"><h2 class="font-bold">📊 Tổng quan hôm nay</h2><p class="text-sm" id="mobileLich">Đang tải…</p></div>
+  <div class="card p-4" style="background:#F0FDF4"><h3 class="font-bold" style="color:#166534">✅ HV Có Bằng <span id="mobileCb">…</span></h3><p class="text-sm">Số liệu thật từ Sheet HocVienCoBang</p><button class="mt-2 w-full py-3 rounded-lg text-white font-bold" style="background:#16A34A" onclick="document.getElementById('maHVCoBang')?.focus();window.scrollTo(0,document.body.scrollHeight)">+ Nhập có bằng</button></div>
   <div class="card p-4" style="border-left:4px solid #DC2626"><b>🚨 Mô phỏng:</b> 102/120h (85%) thiếu 18h, hạn 20/01/2026</div>
   <div class="card p-4" style="border-left:4px solid #DC2626"><b>🚨 Giấy phép GV:</b> 12/10 HV (120%) vượt 2</div>
-  <div class="card p-4" style="border-left:4px solid #DC2626"><b>🚨 Niên hạn xe:</b> 15y3m quá 3 tháng + quá 5.000km • 12,5tr</div>
+  <div class="card p-4" style="border-left:4px solid #DC2626"><b>🚨 Niên hạn xe:</b> 51C-78901 quá niên hạn 15y3m — CẤM • 15tr</div>
   <div id="mobileCoBang"></div>
 </div>
 <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-2 text-xs no-print" style="z-index:50">
@@ -329,12 +304,13 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 </nav>
 
 <!-- MODAL THÊM/SỬA -->
-<div id="modal" class="hidden fixed inset-0 flex items-center justify-center" style="background:rgba(0,0,0,.5);z-index:100"><div class="card p-5 w-[92%] max-w-lg max-h-[85vh] overflow-y-auto"><h3 class="font-bold" id="modalTitle">Thêm mới</h3><div id="modalFields" class="space-y-2 mt-3"></div><div class="flex gap-2 mt-4"><button class="flex-1 py-3 rounded-lg text-white font-bold" style="background:#1E40AF" onclick="saveModal()">Lưu</button><button class="flex-1 py-3 rounded-lg border" onclick="closeModal()">Đóng</button></div></div></div>
+<div id="modal" class="hidden fixed inset-0 flex items-center justify-center" style="background:rgba(0,0,0,.5);z-index:100"><div class="card p-5 w-[92%] max-w-lg max-h-[85vh] overflow-y-auto"><h3 class="font-bold" id="modalTitle">Thêm mới</h3><div id="modalFields" class="space-y-2 mt-3"></div><div class="flex gap-2 mt-4"><button id="btnSaveModal" class="flex-1 py-3 rounded-lg text-white font-bold" style="background:#1E40AF" onclick="saveModal()">Lưu</button><button id="btnDeleteModal" class="hidden px-4 py-3 rounded-lg text-white font-bold" style="background:#DC2626" onclick="deleteModal()">Xóa</button><button class="flex-1 py-3 rounded-lg border" onclick="closeModal()">Đóng</button></div></div></div>
 
 <script>
 /* ===== CẤU HÌNH: dán URL Web App /exec sau khi deploy Code.gs ===== */
 const API_URL = 'https://script.google.com/macros/s/AKfycbzCIJvWcjkFEGNjJTuVFGQp1zjep0vNDlMuxVc_1NsPYdHgwOuurUdLYnFBHkgF-pN4tA/exec'; // Backend THAT - Sheet QuanLy_TrungTamLaiXe_V12_2
 let currentSheet = 'HocVienCoBang', moduleRows = [];
+const SHEET_HEADERS = {"TrungTamSatHach": ["MaTT", "TenTT", "DiaChi", "SDT", "NguoiLH", "PhanTramAnChia", "TrangThai"], "KhoaHoc": ["MaKhoa", "TenKhoa", "HeSo", "MaTT_SatHach", "TenTT_SatHach", "NgayKhaiGiang", "SoHV", "TrangThai"], "HocVien": ["MaHV", "TenHV", "SDT", "NgaySinh", "MaKhoa", "HeSo", "LoaiBang", "MaTT_SatHach", "TrangThaiHoc", "CoBang", "TienDo", "MaGV", "BienSo", "NgayCoBang", "SoBang", "NhomZalo", "DaGuiZalo"], "HoSoDauVao": ["MaHV", "CCCD", "KhamSK", "Anh3x4", "DonDeNghi", "LyLich", "HanBoSung", "TrangThai"], "KiemTraDieuKien": ["MaHV", "Tuoi", "HeSoDK", "BangCu", "SoNamCoBang", "SoKMAnToan", "DuDK", "LyDo"], "BienDongHV": ["MaBD", "MaHV", "Loai", "Ngay", "LyDo", "SoTienHoan", "MaKhoaMoi", "TrangThai"], "HopDong": ["MaHDong", "MaHV", "NgayKy", "TongTien", "CamKet", "FilePDF", "ChuKySo", "TrangThai"], "HocMoPhong": ["MaHV", "GioCabinCan", "DaHoc", "ConLai", "Diem", "TrangThai", "Han"], "GiaoVien": ["MaGV", "TenGV", "SDT", "HangDay", "LuongGio", "LuongKM", "SoHVDangDay", "GioiHan", "TrangThai"], "GiayPhepGV": ["MaGV", "SoGiayPhep", "NgayCap", "Han", "SoHVDangDay", "GioiHan", "TrangThai"], "LichGiaoVien": ["MaLich", "MaGV", "Ngay", "GioBD", "GioKT", "MaHV", "BienSo", "LoaiLich", "TrangThai"], "XeTapLai": ["BienSo", "LoaiXe", "Hang", "NgayDangKiem", "HanDangKiem", "HanBaoHiem", "KMHienTai", "TrangThai", "MaGVPhuTrach", "LichSuBaoDuong", "MaKhoa", "MaTT_SatHach"], "NienHanXe": ["BienSo", "NamSX", "NienHan", "SoNamDaDung", "KMHienTai", "KMBaoDuong", "TrangThai", "ChiPhi"], "LichTheoKhoa": ["MaLichKhoa", "MaKhoa", "Ngay", "Buoi", "GioBD", "GioKT", "MonHoc", "DiaDiem", "GiaoVien", "LoaiLich"], "LichChayDAT": ["MaPhien", "MaHV", "MaGV", "BienSo", "NgayChay", "GioBD", "GioKT", "QuangDuongKM", "SoGio", "LoaiDuong", "GPS_BatDau", "GPS_KetThuc", "TrangThaiDAT"], "TongHopDAT": ["MaHV", "TongKMCan", "DaChay", "ConLai", "TongGioCan", "DaChayGio", "DuDKThi", "PhanTram", "TrangThai"], "KyThi": ["MaKyThi", "MaKhoa", "HeSo", "MaTT_SatHach", "NgayThi", "LoaiThi", "DiaDiem", "SoHV"], "KetQuaThi": ["MaHV", "DiemLT", "DanhGiaLT", "DiemMP", "DanhGiaMP", "DiemSH", "DanhGiaSH", "DiemDT", "DanhGiaDT", "KetQua", "GhiChu", "NgayThi", "NgayCoBang", "SoBang", "TrangThaiBang", "CoBang"], "HocVienCoBang": ["MaHV", "TenHV", "HeSo", "MaTT", "TenTT", "NgayThi", "NgayCoBang", "SoBang", "SoThang", "NhomZalo", "DaGuiZalo", "NgayGuiZalo", "TrangThai"], "HoaDon": ["MaHD", "MaHV", "TongTien", "DaThu", "ConLai", "TrangThai"], "ChiTietThu": ["MaPhieu", "MaHD", "NgayThu", "SoTien", "PhuongThuc", "ConLaiSauThu"], "BangLuongGV": ["Thang", "MaGV", "TenGV", "SoGioDay", "SoKMDAT", "LuongGio", "LuongKM", "TongLuong", "TrangThai"], "ChiPhi": ["MaCP", "Ngay", "LoaiChi", "NoiDung", "SoTien", "BienSo", "MaGV", "MaKhoa"], "ChiPhiLienKet": ["MaCPLK", "Thang", "MaTT_SatHach", "SoHVThi", "DoanhThu", "PhanTramAnChia", "SoTienTraTT", "TrangThai"], "PhanQuyen": ["Email", "SDT", "HoTen", "VaiTro", "TrangThai"], "LichSu": ["ThoiGian", "HanhDong", "MaDoiTuong", "NguoiThucHien", "ChiTiet"], "CauHinh": ["Khoa", "GiaTri", "GhiChu"]};
 const DEMO = {
   HoSoDauVao:[{MaHV:'HV001',CCCD:'Da nop',KhamSK:'Da nop',Anh3x4:'Thieu',DonDeNghi:'Het han',LyLich:'Da nop',HanBoSung:'30/10/2026'},{MaHV:'HV1024',CCCD:'Da nop',KhamSK:'Thieu',Anh3x4:'Da nop',DonDeNghi:'Da nop',LyLich:'Thieu',HanBoSung:'30/10/2026'}],
   KetQuaThi:[{MaHV:'HV001',DiemLT:'28/30',DanhGiaLT:'Dat',DiemMP:'45/50',DanhGiaMP:'Dat',DiemSH:'85/100',DanhGiaSH:'Dat',DiemDT:'90/100',DanhGiaDT:'Dat',KetQua:'DAT',NgayThi:'25/12/26',NgayCoBang:'10/01/27',SoBang:'B2-123456'}],
@@ -399,25 +375,37 @@ async function apiGet(q){ if(API_URL.includes('DEPLOY_ID')) throw new Error('dem
 function showTab(tab, btn){
   ['dashboard','module','cobang','caidat','hoso','ketqua','thuchi','baocao','inan','canhbao'].forEach(t=>{ const el=document.getElementById('view-'+t); if(el) el.classList.toggle('hidden', t!==tab); });
   document.querySelectorAll('#sidebar24 .navbtn').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active');
-  if(tab==='cobang') renderHocVienCoBang(); if(tab==='hoso') renderHoSoDauVao(); if(tab==='ketqua') renderKetQuaThi();
+  if(tab==='cobang') renderHocVienCoBang(); if(tab==='hoso') renderHoSoDauVao(); if(tab==='ketqua') renderKetQuaThi(); if(tab==='canhbao') renderCanhBao(); if(tab==='thuchi') renderThuChiData();
   window.scrollTo(0,0);
 }
 /* ===== BO LOC THAT 3 CAP: TT Sat Hach -> He so -> Khoa (du lieu nap tu API) ===== */
-let FD = {tt:[], khoa:[], hv:[], kq:[], lichKhoa:[], hoaDon:[], loaded:false};
+let FD = {tt:[], khoa:[], hv:[], kq:[], lichKhoa:[], hoaDon:[], gv:[], lichGV:[], loaded:false};
 const HE_LABEL = {B1:'B1 Số tự động', B2:'B2 Số sàn', C:'C', C1:'C1', D:'D'};
 async function loadFilterData(){
   try{
-    const [tt,khoa,hv,kq,lk,hd] = await Promise.all([
+    const [tt,khoa,hv,kq,lk,hd,gv,lgv] = await Promise.all([
       apiGet('action=getList&sheet=TrungTamSatHach'), apiGet('action=getList&sheet=KhoaHoc'),
       apiGet('action=getList&sheet=HocVien'), apiGet('action=getList&sheet=KetQuaThi'),
-      apiGet('action=getList&sheet=LichTheoKhoa'), apiGet('action=getList&sheet=HoaDon')]);
-    FD = {tt:tt.data||[], khoa:khoa.data||[], hv:hv.data||[], kq:kq.data||[], lichKhoa:lk.data||[], hoaDon:hd.data||[], loaded:true};
+      apiGet('action=getList&sheet=LichTheoKhoa'), apiGet('action=getList&sheet=HoaDon'),
+      apiGet('action=getList&sheet=GiaoVien'), apiGet('action=getList&sheet=LichGiaoVien')]);
+    FD = {tt:tt.data||[], khoa:khoa.data||[], hv:hv.data||[], kq:kq.data||[], lichKhoa:lk.data||[], hoaDon:hd.data||[], gv:gv.data||[], lichGV:lgv.data||[], loaded:true};
     const selTT=document.getElementById('filterTT');
     FD.tt.forEach(t=>{ const c=FD.hv.filter(h=>h.MaTT_SatHach===t.MaTT).length; const o=document.createElement('option'); o.value=t.MaTT; o.textContent=t.MaTT+' '+t.TenTT+' ('+c+' HV)'; selTT.appendChild(o); });
     const selHe=document.getElementById('filterHeSo'); [...new Set(FD.hv.map(h=>h.HeSo).filter(Boolean))].forEach(h=>{ const o=document.createElement('option'); o.value=h; o.textContent=HE_LABEL[h]||h; selHe.appendChild(o); });
-    rebuildKhoaOptions();
+    rebuildKhoaOptions(); renderTodayAndTop_();
   }catch(e){ /* API chua san sang: giu o loc mac dinh */ }
 }
+function renderTodayAndTop_(){
+  const tb=document.getElementById('todayBody');
+  if(tb && FD.lichGV && FD.lichGV.length){ const gvMap={}; (FD.gv||[]).forEach(g=>gvMap[g.MaGV]=g.TenGV);
+    tb.innerHTML=FD.lichGV.slice(0,6).map(r=>'<tr class="border-b"><td class="p-2">'+(r.GioBD||'')+'–'+(r.GioKT||'')+'</td><td>'+(r.MaHV||'')+'</td><td>'+(gvMap[r.MaGV]||r.MaGV||'')+'</td><td>'+(r.LoaiLich||'')+'</td><td>'+(r.BienSo||'')+'</td><td>'+(r.TrangThai||'')+'</td></tr>').join(''); }
+  const tg=document.getElementById('topGV');
+  if(tg && FD.hv.length && FD.kq.length){ const byGV={}; FD.kq.forEach(r=>{ const hv=FD.hv.find(h=>h.MaHV===r.MaHV); if(!hv||!hv.MaGV) return; byGV[hv.MaGV]=byGV[hv.MaGV]||{n:0,d:0}; byGV[hv.MaGV].n++; if(String(r.KetQua)==='Do') byGV[hv.MaGV].d++; });
+    const gvMap={}; (FD.gv||[]).forEach(g=>gvMap[g.MaGV]=g.TenGV);
+    const arr=Object.keys(byGV).filter(k=>byGV[k].n>=3).map(k=>({ten:gvMap[k]||k, p:Math.round(byGV[k].d/byGV[k].n*100)})).sort((a,b)=>b.p-a.p).slice(0,3);
+    if(arr.length) tg.textContent=arr.map(x=>x.ten+' '+x.p+'%').join(' • '); }
+}
+
 function rebuildKhoaOptions(){
   if(!FD.loaded) return;
   const tt=document.getElementById('filterTT').value, he=document.getElementById('filterHeSo').value;
@@ -433,87 +421,172 @@ function applyFilter(){
   const f=filterVals_();
   const dashEl=document.getElementById('view-dashboard');
   const dashVisible = dashEl && !dashEl.classList.contains('hidden');
-  if(!f.tt && !f.he && !f.kh){ if(dashVisible) renderDashboard(); if(typeof moduleRows!=='undefined' && moduleRows.length) renderModuleTable(); renderHocVienCoBang(); return; }
+  const cap=document.getElementById('kpiLichCap');
+  if(!f.tt && !f.he && !f.kh){ if(cap) cap.textContent='Doanh thu tháng'; if(dashVisible) renderDashboard(); if(typeof moduleRows!=='undefined' && moduleRows.length) renderModuleTable(); renderHocVienCoBang(); return; }
   if(!FD.loaded){ alert('Dữ liệu lọc đang tải từ Sheet, đợi vài giây rồi bấm Lọc lại'); return; }
   const set=FD.hv.filter(h=>(!f.tt||h.MaTT_SatHach===f.tt)&&(!f.he||h.HeSo===f.he)&&(!f.kh||h.MaKhoa===f.kh));
   const maSet=new Set(set.map(h=>h.MaHV));
   if(dashVisible){
     const khoaSet=new Set(set.map(h=>h.MaKhoa));
     const lich=FD.lichKhoa.filter(l=>khoaSet.has(l.MaKhoa));
+    const lichGV=(FD.lichGV||[]).filter(r=>maSet.has(r.MaHV));
     const kq=FD.kq.filter(r=>maSet.has(r.MaHV)); const doC=kq.filter(r=>String(r.KetQua)==='Do').length;
     const xeSet=new Set(set.map(h=>h.BienSo).filter(Boolean)); const gvSet=new Set(set.map(h=>h.MaGV).filter(Boolean));
     const hd=FD.hoaDon.filter(x=>maSet.has(x.MaHV));
     const thu=hd.reduce((s,x)=>s+(Number(x.DaThu)||0),0); const con=hd.reduce((s,x)=>s+(Number(x.ConLai)||0),0);
     const cb=set.filter(h=>String(h.TrangThaiHoc||'').indexOf('XONG')>=0).length;
     document.getElementById('kpiKhoa').textContent=set.length; document.getElementById('kpiSub1').textContent=khoaSet.size+' khóa trong phạm vi lọc';
-    document.getElementById('kpiHV').textContent=lich.length+' buổi'; document.getElementById('kpiSub2').textContent='LT '+lich.filter(l=>l.LoaiLich==='LT').length+' • TH '+lich.filter(l=>l.LoaiLich==='TH').length;
+    document.getElementById('kpiHV').textContent=(lich.length+lichGV.length)+' buổi'; document.getElementById('kpiSub2').textContent='LT '+lich.filter(l=>l.LoaiLich==='LT').length+' • TH '+lich.filter(l=>l.LoaiLich==='TH').length+' • DAT '+lichGV.length;
     document.getElementById('kpiGV').textContent=(kq.length?Math.round(doC/kq.length*100):0)+'%'; document.getElementById('kpiSub3').textContent=kq.length+' HV đã có kết quả thi';
     document.getElementById('kpiXe').textContent=xeSet.size+' xe'; document.getElementById('kpiSub4').textContent=gvSet.size+' giáo viên phụ trách'; document.getElementById('kpiSub4').style.color='#65676B';
+    if(cap) cap.textContent='Đã thu theo hóa đơn (phạm vi lọc)';
     document.getElementById('kpiLich').textContent=fmtTr_(thu); document.getElementById('kpiSub5').textContent='Còn phải thu '+fmtTr_(con);
     const cbEl=document.getElementById('cbTong'); if(cbEl) cbEl.textContent=cb+'/'+set.length+' ('+(set.length?Math.round(cb/set.length*100):0)+'%)';
   }
   if(typeof moduleRows!=='undefined' && moduleRows.length) renderModuleTable();
 }
+
 /* Heatmap demo Oct 2026 */
 (function(){ const h=document.getElementById('heatmap'); if(!h) return; for(let d=1;d<=31;d++){ const v=(d*7)%5; const c=['#EBEDF0','#9BE9A8','#40C463','#30A14E','#216E39'][v]; h.innerHTML+='<div title="Ngày '+d+'/10: '+(10+v*8)+' lịch" style="height:26px;border-radius:6px;background:'+c+';display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">'+d+'</div>'; } })();
 /* Dashboard */
 function fmtTr_(n){ n=Number(n)||0; if(n>=1000000000){ const t=n/1000000000; return (Math.round(t*100)/100).toString().replace('.',',')+' tỷ'; } return Math.round(n/1000000)+' triệu'; }
 async function renderDashboard(){
   try{ const d=await apiGet('action=getDashboardFinal'); if(d.ok){
-    /* Gán số API theo ĐÚNG nhãn từng thẻ của template chuẩn */
     document.getElementById('kpiKhoa').textContent=d.kpi.hv; document.getElementById('kpiSub1').textContent=d.kpi.khoa+' khóa đang học';
     document.getElementById('kpiHV').textContent=d.kpi.lichHomNay+' buổi'; document.getElementById('kpiSub2').textContent='LT '+d.kpi.lichLT+' • TH '+d.kpi.lichTH;
     document.getElementById('kpiGV').textContent=(d.baoCaoSo?d.baoCaoSo.tyLeDo:0)+'%'; document.getElementById('kpiSub3').textContent='DAT TB '+(d.baoCaoSo?d.baoCaoSo.kmDATTB:0)+' km/HV';
     document.getElementById('kpiXe').textContent=d.kpi.xe+' xe'; document.getElementById('kpiSub4').textContent=d.kpi.gv+' giáo viên phụ trách'; document.getElementById('kpiSub4').style.color='#65676B';
     document.getElementById('kpiLich').textContent=fmtTr_(d.thuChi.tongThu); document.getElementById('kpiSub5').textContent='Lợi nhuận '+fmtTr_(d.thuChi.loiNhuan)+' ('+d.thuChi.tyLeLoiNhuan+'%)';
-    document.getElementById('cbTong').textContent=d.coBang.tong+'/'+d.coBang.tongHV+' ('+d.coBang.phanTram+'%)'; } }
-  catch(e){ /* giữ số demo trên giao diện */ }
+    document.getElementById('cbTong').textContent=d.coBang.tong+'/'+d.coBang.tongHV+' ('+d.coBang.phanTram+'%)';
+    const setT=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
+    const cb=d.coBang||{}; const tot=cb.tong||0;
+    setT('cbB1',(cb.b1||0)+' HV'); setT('cbB2',(cb.b2||0)+' HV'); setT('cbC',(cb.c||0)+' HV'); setT('cbTyLe',(d.baoCaoSo?d.baoCaoSo.tyLeDo:0)+'%');
+    setT('donutText','B2 '+(cb.b2||0)+' • B1 '+(cb.b1||0)+' • C '+(cb.c||0)+' | Đỗ '+(d.baoCaoSo?d.baoCaoSo.tyLeDo:0)+'%');
+    const dc=document.getElementById('donutChart'); if(dc&&tot>0){ const p1=Math.round(cb.b2/tot*100), p2=p1+Math.round(cb.b1/tot*100); dc.style.background='conic-gradient(#16A34A 0 '+p1+'%,#1E40AF '+p1+'% '+p2+'%,#F59E0B '+p2+'% 100%)'; }
+    setT('heatmapTotal', d.kpi.lichHomNay); setT('bcTong', d.kpi.hv); setT('bcTyLe',(d.baoCaoSo?d.baoCaoSo.tyLeDo:0)+'%'); setT('bcKm',(d.baoCaoSo?d.baoCaoSo.kmDATTB:0)+' km');
+    setT('mobileCb', tot+'/'+(cb.tongHV||0)+' ('+(cb.phanTram||0)+'%)'); setT('mobileLich', d.kpi.lichHomNay+' lịch trong kỳ • LT '+d.kpi.lichLT+' • TH '+d.kpi.lichTH);
+    const bd=document.getElementById('barDo'); if(bd) bd.style.width=(d.baoCaoSo?d.baoCaoSo.tyLeDo:0)+'%';
+    const bt=document.getElementById('barTruot'); if(bt) bt.style.width=(100-(d.baoCaoSo?d.baoCaoSo.tyLeDo:0))+'%';
+    const items=(d.canhBao&&d.canhBao.canhBao)||[]; const dos=items.filter(x=>x.muc==='DO');
+    const da=document.getElementById('dashAlerts'); if(da) da.innerHTML=dos.slice(0,6).map(x=>'<div class="p-3 rounded-lg" style="background:#FEE2E2">⚠️ <b>'+x.module+'</b> • '+x.ma+' — '+x.noiDung+'</div>').join('')||'<div class="p-3 rounded-lg" style="background:#DCFCE7">Không có cảnh báo đỏ</div>';
+    const dac=document.getElementById('dashAlertCount'); if(dac) dac.textContent=items.length+' cảnh báo (đỏ '+dos.length+')';
+    const c6=document.getElementById('cards6'); if(c6) c6.innerHTML=dos.slice(0,6).map(x=>'<div class="card p-4" style="border-left:4px solid #DC2626"><span class="text-xs text-white px-2 py-1 rounded-full" style="background:#DC2626">CẢNH BÁO</span><h4 class="font-bold mt-2">'+x.module+'</h4><p class="text-sm">'+x.ma+'</p><p class="text-xs mt-2" style="color:#DC2626">⚠️ '+x.noiDung+'</p></div>').join('');
+    const dq=document.getElementById('dashQuick'); if(dq){ const q=items.filter(x=>x.loai===8||x.loai===9).slice(0,2); dq.innerHTML=(q.length?q:dos.slice(0,2)).map(x=>'<div class="card p-4" style="border-left:4px solid '+(x.muc==='DO'?'#DC2626':'#F59E0B')+'"><b>'+(x.muc==='DO'?'🔴':'🟡')+' '+x.module+':</b> '+x.ma+' — '+x.noiDung+'</div>').join(''); }
+  } }
+  catch(e){ const da=document.getElementById('dashAlerts'); if(da) da.innerHTML='<div class="p-3 rounded-lg" style="background:#FEE2E2">Không tải được dữ liệu thật từ API — kiểm tra kết nối rồi tải lại trang.</div>'; }
 }
-async function refreshAlerts(){ try{ const d=await apiGet('action=checkAllCanhBao'); alert('Quét xong: '+d.total+' cảnh báo (12 loại)'); }catch(e){ alert('Demo: 6 card đỏ phía trên là mẫu. Kết nối API_URL để quét 12 loại cảnh báo thật từ Sheet.'); } }
+async function renderCanhBao(){
+  const el=document.getElementById('canhBaoList');
+  try{ const d=await apiGet('action=checkAllCanhBao'); if(!d.ok) throw new Error(d.error||'API lỗi');
+    const items=d.canhBao||[]; const ct=document.getElementById('canhBaoTotal'); if(ct) ct.textContent='— Tổng '+d.total+' cảnh báo đang mở';
+    if(el) el.innerHTML=items.slice(0,60).map(x=>'<div class="p-3 rounded-lg" style="background:'+(x.muc==='DO'?'#FEE2E2':x.muc==='VANG'?'#FEF3C7':'#DCFCE7')+'"><b>'+x.module+'</b> • '+x.ma+' — '+x.noiDung+'</div>').join('')+(items.length>60?'<div class="p-3 rounded-lg" style="background:#F0F2F5">… và '+(items.length-60)+' cảnh báo nữa — xem module tương ứng để xử lý</div>':'');
+  }catch(e){ if(el) el.innerHTML='<div class="p-3 rounded-lg" style="background:#FEE2E2">Không quét được cảnh báo từ API. <button class="underline font-bold" onclick="renderCanhBao()">Thử lại</button></div>'; }
+}
+
+async function refreshAlerts(){ await renderCanhBao(); const ct=document.getElementById('canhBaoTotal'); alert('Đã quét lại 12 loại cảnh báo'+(ct&&ct.textContent?ct.textContent.replace('—',':'):'')); }
+
 /* Module generic */
-async function loadModule(sheet, btn){ currentSheet=sheet; showTab('module', btn); document.getElementById('moduleTitle').textContent='Module • '+sheet; try{ const d=await apiGet('action=getList&sheet='+encodeURIComponent(sheet)); moduleRows=d.data||[]; }catch(e){ moduleRows=DEMO[sheet]||[{ThongBao:'Chưa có dữ liệu mẫu cho module này — kết nối API_URL để lấy dữ liệu thật từ Sheet '+sheet}]; } renderModuleTable(); }
+let moduleToken=0, modulePage=1, pageRows=[];
+const PAGE_SIZE=50;
+function fmtVal_(k,v){ if(v===null||v===undefined) return ''; if(k==='SDT'){ const s=String(v).replace(/\D/g,''); if(s.length===9&&s.charAt(0)==='9') return '0'+s; return String(v); } if(k==='PhanTram'&&typeof v==='number'&&v<=1) return Math.round(v*100)+'%'; if(typeof v==='number'&&/(Tien|Luong|DaThu|ConLai|DoanhThu)/.test(k)) return v.toLocaleString('vi-VN'); return String(v); }
+async function loadModule(sheet, btn){ currentSheet=sheet; modulePage=1; const tk=++moduleToken; showTab('module', btn); document.getElementById('moduleTitle').textContent='Module • '+sheet; const s=document.getElementById('moduleSearch'); if(s) s.value=''; document.getElementById('moduleHead').innerHTML=''; document.getElementById('moduleBody').innerHTML='<tr><td class="p-3">Đang tải dữ liệu thật từ Sheet '+sheet+'…</td></tr>'; const pg=document.getElementById('modulePager'); if(pg) pg.innerHTML='';
+  try{ const d=await apiGet('action=getList&sheet='+encodeURIComponent(sheet)); if(tk!==moduleToken) return; if(!d.ok) throw new Error(d.error||'API lỗi'); moduleRows=d.data||[]; }
+  catch(e){ if(tk!==moduleToken) return; moduleRows=[]; document.getElementById('moduleBody').innerHTML='<tr><td class="p-3" style="color:#DC2626">Không tải được dữ liệu từ Sheet '+sheet+'. <button class="underline font-bold" onclick="loadModule(currentSheet)">Thử lại</button></td></tr>'; return; }
+  renderModuleTable(); }
+function filteredModuleRows_(){ const q=(document.getElementById('moduleSearch').value||'').toLowerCase(); const fv=filterVals_();
+  return moduleRows.filter(r=>JSON.stringify(r).toLowerCase().includes(q)).filter(r=>(!fv.tt||r.MaTT_SatHach===fv.tt||r.MaTT===fv.tt) && (!fv.he||r.HeSo===fv.he||r.HeSoDK===fv.he) && (!fv.kh||r.MaKhoa===fv.kh)); }
 function renderModuleTable(){
-  const q=(document.getElementById('moduleSearch').value||'').toLowerCase(); const fv=filterVals_();
-  const rows=moduleRows.filter(r=>JSON.stringify(r).toLowerCase().includes(q))
-    .filter(r=>(!fv.tt||r.MaTT_SatHach===fv.tt||r.MaTT===fv.tt) && (!fv.he||r.HeSo===fv.he||r.HeSoDK===fv.he) && (!fv.kh||r.MaKhoa===fv.kh));
-  if(!rows.length){ document.getElementById('moduleHead').innerHTML=''; document.getElementById('moduleBody').innerHTML='<tr><td class="p-3">Không có dữ liệu</td></tr>'; return; }
+  const rows=filteredModuleRows_(); const totalPages=Math.max(1,Math.ceil(rows.length/PAGE_SIZE)); if(modulePage>totalPages) modulePage=totalPages; const start=(modulePage-1)*PAGE_SIZE; pageRows=rows.slice(start,start+PAGE_SIZE);
+  const pager=document.getElementById('modulePager');
+  if(!rows.length){ document.getElementById('moduleHead').innerHTML=''; document.getElementById('moduleBody').innerHTML='<tr><td class="p-3">Không có dữ liệu</td></tr>'; if(pager) pager.innerHTML=''; return; }
   const keys=Object.keys(rows[0]); document.getElementById('moduleHead').innerHTML='<tr>'+keys.map(k=>'<th class="p-2 text-left">'+k+'</th>').join('')+'<th></th></tr>';
-  document.getElementById('moduleBody').innerHTML=rows.map((r,i)=>'<tr class="border-b">'+keys.map(k=>{ const v=r[k]??''; const isXong=String(v).includes('XONG'); return '<td class="p-2">'+(isXong?'<span class="xong px-2 py-1 rounded-full text-xs">'+v+' ✅</span>':v)+'</td>'; }).join('')+'<td class="p-2"><button class="text-xs px-2 py-1 rounded text-white" style="background:#1E40AF" onclick="openEdit('+i+')">Sửa</button></td></tr>').join('');
+  document.getElementById('moduleBody').innerHTML=pageRows.map((r,i)=>'<tr class="border-b">'+keys.map(k=>{ const v=fmtVal_(k,r[k]); const isXong=String(v).includes('XONG'); return '<td class="p-2">'+(isXong?'<span class="xong px-2 py-1 rounded-full text-xs">'+v+' ✅</span>':v)+'</td>'; }).join('')+'<td class="p-2"><button class="text-xs px-2 py-1 rounded text-white" style="background:#1E40AF" onclick="openEditPage('+i+')">Sửa</button></td></tr>').join('');
+  if(pager) pager.innerHTML='<button class="px-3 py-1 rounded border" '+(modulePage<=1?'disabled':'')+' onclick="modulePage--;renderModuleTable()">← Trước</button><span class="text-sm">Trang '+modulePage+'/'+totalPages+' • '+rows.length+' dòng</span><button class="px-3 py-1 rounded border" '+(modulePage>=totalPages?'disabled':'')+' onclick="modulePage++;renderModuleTable()">Sau →</button>';
 }
+
 /* Có bằng */
+let cbRowsCache=[];
 async function renderHocVienCoBang(){
-  let rows=DEMO.HocVienCoBang; try{ const d=await apiGet('action=getList&sheet=HocVienCoBang'); if(d.data&&d.data.length) rows=d.data; }catch(e){}
-  const he=document.getElementById('cbFilterHe')?.value||'', zalo=document.getElementById('cbFilterZalo')?.value||'';
-  rows=rows.filter(r=>(!he||String(r.HeSo).includes(he))&&(!zalo||String(r.DaGuiZalo).includes(zalo==='Đã gửi'?'Da gui':zalo)));
-  const html=rows.map(r=>'<tr class="border-b" style="background:#F0FDF4"><td class="p-2">'+r.MaHV+'</td><td>'+(r.TenHV||'')+'</td><td>'+(r.HeSo||'')+'</td><td>'+(r.TenTT||r.MaTT||'')+'</td><td>'+(r.NgayCoBang||'')+'</td><td>'+(r.SoBang||'')+'</td><td>'+(r.NhomZalo||'')+'</td><td>'+(r.DaGuiZalo||'')+'</td><td><span class="xong px-2 py-1 rounded-full text-xs">XONG ✅ Đã có bằng</span></td><td><button onclick="guiZaloLai(\''+r.MaHV+'\')" class="text-white px-3 py-1 rounded text-xs" style="background:#1E40AF">Gửi lại Zalo</button></td></tr>').join('');
-  document.getElementById('cobangBody').innerHTML=html||'<tr><td class="p-3" colspan="10">Chưa có học viên có bằng</td></tr>';
+  let rows=[];
+  try{ const d=await apiGet('action=getList&sheet=HocVienCoBang'); if(!d.ok) throw new Error(d.error||'API lỗi'); rows=d.data||[]; }
+  catch(e){ document.getElementById('cobangBody').innerHTML='<tr><td class="p-3" colspan="10" style="color:#DC2626">Không tải được HocVienCoBang từ Sheet. <button class="underline font-bold" onclick="renderHocVienCoBang()">Thử lại</button></td></tr>'; return; }
+  cbRowsCache=rows;
+  const he=document.getElementById('cbFilterHe')?.value||'', tt=document.getElementById('cbFilterTT')?.value||'', zalo=document.getElementById('cbFilterZalo')?.value||'';
+  rows=rows.filter(r=>(!he||String(r.HeSo)===he)&&(!tt||String(r.MaTT)===tt)&&(!zalo||((zalo==='Đã gửi')===(String(r.DaGuiZalo||'').indexOf('Da gui')>=0))));
+  const html=rows.map(r=>'<tr class="border-b" style="background:#F0FDF4"><td class="p-2">'+r.MaHV+'</td><td>'+(r.TenHV||'')+'</td><td>'+(r.HeSo||'')+'</td><td>'+(r.TenTT||r.MaTT||'')+'</td><td>'+fmtVal_('NgayCoBang',r.NgayCoBang)+'</td><td>'+(r.SoBang||'')+'</td><td>'+(r.NhomZalo||'')+'</td><td>'+(r.DaGuiZalo||'')+'</td><td><span class="xong px-2 py-1 rounded-full text-xs">XONG ✅ Đã có bằng</span></td><td><button onclick="guiZaloLai(\''+r.MaHV+'\')" class="text-white px-3 py-1 rounded text-xs" style="background:#1E40AF">Gửi lại Zalo</button></td></tr>').join('');
+  document.getElementById('cobangBody').innerHTML=html||'<tr><td class="p-3" colspan="10">Chưa có học viên có bằng theo bộ lọc này</td></tr>';
   const m=document.getElementById('mobileCoBang'); if(m) m.innerHTML=rows.map(r=>'<div class="card p-4 mt-3" style="background:#F0FDF4"><b>'+r.MaHV+' • '+r.TenHV+'</b><br><span class="xong px-2 py-1 rounded-full text-xs">XONG ✅ '+r.SoBang+'</span> <button class="text-xs underline" onclick="guiZaloLai(\''+r.MaHV+'\')">Gửi lại Zalo</button></div>').join('');
 }
+
 async function capNhatCoBang(maHV){
   const ma=maHV||document.getElementById('maHVCoBang').value.trim(); const ngay=document.getElementById('ngayCoBang').value; const so=document.getElementById('soBang').value.trim();
   if(!ma||!ngay||!so){ alert('Nhập đủ MaHV + Ngày có bằng + Số bằng!'); return; }
   try{ const d=await apiPost({action:'capNhatCoBang',maHV:ma,ngayCoBang:ngay,soBang:so}); if(!d.ok) throw new Error(d.error||'Lỗi'); alert('✅ Đã cập nhật '+ma+' → XONG - Đã có bằng '+so+(d.zalo&&d.zalo.sent?' • Đã gửi Zalo':' • Zalo: CHƯA gửi thật (thiếu token/SĐT, đã ghi LichSu)')); }
-  catch(e){ alert('Demo (chưa kết nối API): ✅ '+ma+' → XONG - Đã có bằng '+so+' • Nhóm tháng tự tạo • Zalo sẽ gửi khi có token trong CauHinh.'); }
+  catch(e){ alert('❌ Cập nhật có bằng THẤT BẠI: không gọi được API — dữ liệu chưa thay đổi gì.'); }
   renderHocVienCoBang();
 }
-async function guiZaloLai(maHV){ try{ const d=await apiPost({action:'sendZaloCoBang',maHV}); alert(d.zalo&&d.zalo.sent?('✅ Đã gửi Zalo: '+d.zalo.text):'⚠️ Chưa gửi thật: thiếu ZaloOAToken hoặc SĐT HV (đã ghi LichSu). Nội dung: Chúc mừng học viên '+maHV+' đã có bằng!'); }catch(e){ alert('Demo: Zalo chúc mừng có bằng cho '+maHV+' — “Chúc mừng Anh đã có bằng! Trung tâm chúc vạn dặm bình an!”'); } }
+async function guiZaloLai(maHV){ try{ const d=await apiPost({action:'sendZaloCoBang',maHV}); alert(d.zalo&&d.zalo.sent?('✅ Đã gửi Zalo: '+d.zalo.text):'⚠️ Chưa gửi thật: thiếu ZaloOAToken hoặc SĐT HV (đã ghi LichSu). Nội dung: Chúc mừng học viên '+maHV+' đã có bằng!'); }catch(e){ alert('❌ Không gọi được API để gửi Zalo cho '+maHV+' — chưa gửi gì cả.'); } }
 /* Modal thêm/sửa */
 let editObj=null;
-function fieldsFor(sheet){ return Object.keys((DEMO[sheet]||[])[0]||{Ma:'',Ten:'',TrangThai:''}); }
-function openAdd(){ editObj={}; openModal('Thêm mới • '+currentSheet, fieldsFor(currentSheet)); }
-function openEdit(i){ editObj=moduleRows[i]; openModal('Sửa • '+currentSheet, Object.keys(editObj)); }
-function openModal(title, keys){ document.getElementById('modalTitle').textContent=title; document.getElementById('modalFields').innerHTML=keys.map(k=>'<div><label class="text-xs font-semibold">'+k+'</label><input data-field="'+k+'" value="'+(editObj[k]??'')+'" class="input-48 border rounded-lg px-3 w-full"></div>').join(''); document.getElementById('modal').classList.remove('hidden'); }
+function fieldsFor(sheet){ if(moduleRows.length) return Object.keys(moduleRows[0]); return SHEET_HEADERS[sheet]||['Ma','Ten','TrangThai']; }
+function openAdd(){ editObj=null; openModal('Thêm mới • '+currentSheet, fieldsFor(currentSheet), {}); }
+function openEditPage(i){ editObj=pageRows[i]; if(!editObj) return; openModal('Sửa • '+currentSheet, Object.keys(editObj), editObj); }
+function openModal(title, keys, obj){ document.getElementById('modalTitle').textContent=title; document.getElementById('modalFields').innerHTML=keys.map(k=>'<div><label class="text-xs font-semibold">'+k+'</label><input data-field="'+k+'" value="'+String((obj||{})[k]??'').replace(/"/g,'&quot;')+'" class="input-48 border rounded-lg px-3 w-full"></div>').join(''); document.getElementById('btnDeleteModal').classList.toggle('hidden', !editObj); document.getElementById('modal').classList.remove('hidden'); }
 function closeModal(){ document.getElementById('modal').classList.add('hidden'); }
-async function saveModal(){ const obj={}; document.querySelectorAll('#modalFields input').forEach(i=>obj[i.dataset.field]=i.value); try{ await apiPost({action:'save',sheet:currentSheet,data:obj}); }catch(e){ moduleRows.push(obj); } closeModal(); renderModuleTable(); alert('Đã lưu vào sheet '+currentSheet); }
-function saveSettings(){ const c=document.getElementById('colorPicker').value; document.documentElement.style.setProperty('--main',c); try{ apiPost({action:'save',sheet:'CauHinh',data:{Khoa:'MauChuDao',GiaTri:c,GhiChu:'Mau giao dien'}}); if(document.getElementById('zaloToken').value) apiPost({action:'save',sheet:'CauHinh',data:{Khoa:'ZaloOAToken',GiaTri:document.getElementById('zaloToken').value,GhiChu:''}}); }catch(e){} alert('Đã lưu cài đặt (màu '+c+') vào CauHinh của dự án này'); }
+async function saveModal(){ const obj={}; document.querySelectorAll('#modalFields input').forEach(i=>obj[i.dataset.field]=i.value.trim());
+  const idKey=(SHEET_HEADERS[currentSheet]||[])[0]||Object.keys(obj)[0];
+  if(!obj[idKey]){ alert('Thiếu mã ('+idKey+') — không lưu dòng không có mã.'); return; }
+  if(currentSheet==='HocVien'&&!obj.TenHV){ alert('Thiếu Tên học viên (TenHV).'); return; }
+  const btn=document.getElementById('btnSaveModal'); btn.disabled=true; btn.textContent='Đang lưu…';
+  try{ const d=await apiPost({action:'save',sheet:currentSheet,data:obj}); if(!d.ok) throw new Error(d.error||'Backend từ chối');
+    closeModal(); alert('✅ Đã lưu thật vào Sheet '+currentSheet+' ('+idKey+' = '+obj[idKey]+')'); await loadModule(currentSheet);
+  }catch(e){ alert('❌ LƯU THẤT BẠI: '+e.message+'. Dữ liệu CHƯA ghi xuống Sheet — kiểm tra mạng/API rồi thử lại.'); }
+  btn.disabled=false; btn.textContent='Lưu'; }
+async function deleteModal(){ if(!editObj) return; const idKey=(SHEET_HEADERS[currentSheet]||[])[0]||Object.keys(editObj)[0]; const id=editObj[idKey];
+  if(!confirm('Xóa bản ghi '+idKey+' = '+id+' khỏi Sheet '+currentSheet+'? Hành động này ghi xuống Sheet thật.')) return;
+  try{ const d=await apiPost({action:'delete',sheet:currentSheet,id:id}); if(!d.ok) throw new Error(d.error||'Backend từ chối'); closeModal(); alert('🗑️ Đã xóa '+id+' khỏi Sheet '+currentSheet); await loadModule(currentSheet); }
+  catch(e){ alert('❌ XÓA THẤT BẠI: '+e.message); } }
+
+async function saveSettings(){ const c=document.getElementById('colorPicker').value; document.documentElement.style.setProperty('--main',c);
+  const items=[['MauChuDao',c,'Mau giao dien'],['TenTrungTam',document.getElementById('cfgTenTT').value,''],['Logo',document.getElementById('cfgLogo').value,''],['DiaChi_SDT',document.getElementById('cfgDiaChi').value,'']];
+  const tok=document.getElementById('zaloToken').value.trim(); if(tok) items.push(['ZaloOAToken',tok,'']);
+  try{ for(const it of items){ const d=await apiPost({action:'save',sheet:'CauHinh',data:{Khoa:it[0],GiaTri:it[1],GhiChu:it[2]}}); if(!d.ok) throw new Error(d.error||'Backend từ chối lưu '+it[0]); }
+    alert('✅ Đã lưu cài đặt thật vào Sheet CauHinh'); }
+  catch(e){ alert('❌ Lưu cài đặt THẤT BẠI: '+e.message); } }
+async function loadSettings(){ try{ const d=await apiGet('action=getList&sheet=CauHinh'); if(!d.ok) return; const m={}; (d.data||[]).forEach(r=>m[r.Khoa]=r.GiaTri);
+  if(m.MauChuDao){ document.documentElement.style.setProperty('--main',m.MauChuDao); const cp=document.getElementById('colorPicker'); if(cp) cp.value=m.MauChuDao; }
+  if(m.TenTrungTam) document.getElementById('cfgTenTT').value=m.TenTrungTam;
+  if(m.Logo) document.getElementById('cfgLogo').value=m.Logo;
+  if(m.DiaChi_SDT) document.getElementById('cfgDiaChi').value=m.DiaChi_SDT; }catch(e){} }
+
 /* Xuất Excel = CSV mở được bằng Excel */
-function exportExcel(sheet){ const rows=(sheet==='HocVienCoBang')?DEMO.HocVienCoBang:(sheet===currentSheet?moduleRows:[]); const data=rows.length?rows:[{ThongBao:'Khong co du lieu'}]; const keys=Object.keys(data[0]); const csv='\ufeff'+keys.join(',')+'\n'+data.map(r=>keys.map(k=>'"'+String(r[k]??'').replace(/"/g,'""')+'"').join(',')).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download=sheet+'.csv'; a.click(); }
+function exportExcel(sheet){ const rows=(sheet==='HocVienCoBang')?cbRowsCache:(sheet===currentSheet?moduleRows:(sheet==='HocVien'?FD.hv:[])); const data=rows.length?rows:[{ThongBao:'Khong co du lieu'}]; const keys=Object.keys(data[0]); const csv='\ufeff'+keys.join(',')+'\n'+data.map(r=>keys.map(k=>'"'+String(r[k]??'').replace(/"/g,'""')+'"').join(',')).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download=sheet+'.csv'; a.click(); }
+async function exportBaoCao(){ let rows=FD.hv; if(!rows.length){ try{ const d=await apiGet('action=getList&sheet=HocVien'); rows=d.data||[]; }catch(e){} } if(!rows.length){ alert('Chưa tải được dữ liệu học viên để xuất báo cáo'); return; }
+  const keys=['MaHV','TenHV','MaKhoa','HeSo','MaTT_SatHach','TrangThaiHoc','CoBang','SoBang','TienDo']; const csv='\ufeff'+keys.join(',')+'\n'+rows.map(r=>keys.map(k=>'"'+String(r[k]??'').replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='BaoCaoSoGTVT_HocVien.csv'; a.click(); }
 function chipHS(v){ const ok=String(v).includes('Da nop'); return '<span class="px-2 py-1 rounded-full text-xs" style="'+(ok?'background:#DCFCE7;color:#16A34A;border:1px solid #16A34A':'background:#FEE2E2;color:#DC2626')+'">'+v+'</span>'; }
-function renderHoSoDauVao(){ let rows=DEMO.HoSoDauVao; document.getElementById('hosoBody').innerHTML=rows.map(r=>'<tr class="border-b"><td class="p-2">'+r.MaHV+'</td><td>'+chipHS(r.CCCD)+'</td><td>'+chipHS(r.KhamSK)+'</td><td>'+chipHS(r.Anh3x4)+'</td><td>'+chipHS(r.DonDeNghi)+'</td><td>'+chipHS(r.LyLich)+'</td><td><b style="color:#DC2626">'+r.HanBoSung+'</b></td><td><button class="px-2 py-1 rounded text-xs text-white" style="background:#1E40AF" onclick="nhacZaloHoSo(\''+r.MaHV+'\')">Nhắc Zalo</button> <button class="px-2 py-1 rounded text-xs border" onclick="window.print()">Xuất PDF checklist</button></td></tr>').join(''); }
-async function nhacZaloHoSo(maHV){ try{ await apiPost({action:'nhacZaloHoSo',maHV}); alert('Đã gửi nhắc Zalo bổ sung hồ sơ cho '+maHV); }catch(e){ alert('Demo: Đã nhắc Zalo '+maHV+' — bổ sung giấy tờ thiếu/hết hạn trước 30/10.'); } }
-function renderKetQuaThi(){ let rows=DEMO.KetQuaThi; document.getElementById('ketquaBody').innerHTML=rows.map(r=>'<tr class="border-b"><td class="p-2">'+r.MaHV+'</td><td>'+r.DiemLT+' <span class="xong px-2 py-0.5 rounded-full text-xs">Đạt</span></td><td>'+r.DiemMP+' <span class="xong px-2 py-0.5 rounded-full text-xs">Đạt</span></td><td>'+r.DiemSH+' <span class="xong px-2 py-0.5 rounded-full text-xs">Đạt</span></td><td>'+r.DiemDT+' <span class="xong px-2 py-0.5 rounded-full text-xs">Đạt</span></td><td><b style="color:#16A34A">'+r.KetQua+'</b></td><td>'+r.NgayThi+'</td><td>'+r.NgayCoBang+'</td><td>'+r.SoBang+'</td><td><button class="px-2 py-1 rounded text-xs border" onclick="window.print()">In phiếu điểm</button> <button class="px-2 py-1 rounded text-xs text-white" style="background:#16A34A" onclick="guiZaloLai(\''+r.MaHV+'\')">Gửi Zalo chúc mừng</button></td></tr>').join(''); }
+async function renderHoSoDauVao(){
+  let rows=[];
+  try{ const d=await apiGet('action=getList&sheet=HoSoDauVao'); if(!d.ok) throw new Error(d.error||'API lỗi'); rows=d.data||[]; }
+  catch(e){ document.getElementById('hosoBody').innerHTML='<tr><td class="p-3" colspan="8" style="color:#DC2626">Không tải được hồ sơ từ Sheet. <button class="underline font-bold" onclick="renderHoSoDauVao()">Thử lại</button></td></tr>'; return; }
+  document.getElementById('hosoBody').innerHTML=rows.map(r=>'<tr class="border-b"><td class="p-2">'+r.MaHV+'</td><td>'+chipHS(r.CCCD)+'</td><td>'+chipHS(r.KhamSK)+'</td><td>'+chipHS(r.Anh3x4)+'</td><td>'+chipHS(r.DonDeNghi)+'</td><td>'+chipHS(r.LyLich)+'</td><td><b style="color:#DC2626">'+fmtVal_('HanBoSung',r.HanBoSung)+'</b></td><td><button class="px-2 py-1 rounded text-xs text-white" style="background:#1E40AF" onclick="nhacZaloHoSo(\''+r.MaHV+'\')">Nhắc Zalo</button> <button class="px-2 py-1 rounded text-xs border" onclick="window.print()">Xuất PDF checklist</button></td></tr>').join('')||'<tr><td class="p-3" colspan="8">Chưa có hồ sơ</td></tr>';
+}
+
+async function nhacZaloHoSo(maHV){ try{ const d=await apiPost({action:'nhacZaloHoSo',maHV}); if(!d.ok) throw new Error(d.error||'Backend từ chối'); alert(d.zalo&&d.zalo.sent?('✅ Đã gửi nhắc Zalo cho '+maHV):('⚠️ Chưa gửi thật cho '+maHV+': thiếu ZaloOAToken hoặc SĐT HV (đã ghi LichSu).')); }catch(e){ alert('❌ Nhắc Zalo THẤT BẠI cho '+maHV+': '+e.message); } }
+function chipDiem_(diem, dg){ const ok=String(dg||'').indexOf('Dat')>=0; return diem+' <span class="px-2 py-0.5 rounded-full text-xs" style="'+(ok?'background:#DCFCE7;color:#16A34A':'background:#FEE2E2;color:#DC2626')+'">'+(ok?'Đạt':'Trượt')+'</span>'; }
+async function renderKetQuaThi(){
+  let rows=[];
+  try{ const d=await apiGet('action=getList&sheet=KetQuaThi'); if(!d.ok) throw new Error(d.error||'API lỗi'); rows=d.data||[]; }
+  catch(e){ document.getElementById('ketquaBody').innerHTML='<tr><td class="p-3" colspan="10" style="color:#DC2626">Không tải được kết quả thi từ Sheet. <button class="underline font-bold" onclick="renderKetQuaThi()">Thử lại</button></td></tr>'; return; }
+  const kf=document.getElementById('kqFilterKhoa')?.value||''; const hvMap={}; (FD.hv||[]).forEach(h=>hvMap[h.MaHV]=h.MaKhoa);
+  if(kf) rows=rows.filter(r=>hvMap[r.MaHV]===kf);
+  document.getElementById('ketquaBody').innerHTML=rows.map(r=>{ const dat=String(r.KetQua)==='Do'; return '<tr class="border-b"><td class="p-2">'+r.MaHV+'</td><td>'+chipDiem_(r.DiemLT,r.DanhGiaLT)+'</td><td>'+chipDiem_(r.DiemMP,r.DanhGiaMP)+'</td><td>'+chipDiem_(r.DiemSH,r.DanhGiaSH)+'</td><td>'+chipDiem_(r.DiemDT,r.DanhGiaDT)+'</td><td><b style="color:'+(dat?'#16A34A':'#DC2626')+'">'+(dat?'ĐỖ':'TRƯỢT')+'</b></td><td>'+fmtVal_('NgayThi',r.NgayThi)+'</td><td>'+fmtVal_('NgayCoBang',r.NgayCoBang)+'</td><td>'+(r.SoBang||'')+'</td><td><button class="px-2 py-1 rounded text-xs border" onclick="window.print()">In phiếu điểm</button> <button class="px-2 py-1 rounded text-xs text-white" style="background:#16A34A" onclick="guiZaloLai(\''+r.MaHV+'\')">Gửi Zalo chúc mừng</button></td></tr>'; }).join('')||'<tr><td class="p-3" colspan="10">Chưa có kết quả thi theo bộ lọc này</td></tr>';
+}
+async function renderThuChiData(){ try{ const d=await apiGet('action=getThuChi'); if(!d.ok) return; const setT=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
+  setT('tcThu', fmtTr_(d.tongThu)); setT('tcChi', fmtTr_(d.tongChi)); setT('tcLN', fmtTr_(d.loiNhuan)+' • '+(d.tyLe??d.tyLeLoiNhuan??'')+'%'); setT('tcNo', fmtTr_(d.conPhaiThu)); }catch(e){} }
+
 function renderThuChi(){ showTab('thuchi'); }
-renderDashboard(); renderHocVienCoBang(); loadFilterData();
+renderDashboard(); renderHocVienCoBang(); loadFilterData(); loadSettings();
 if(window.lucide) lucide.createIcons();
 </script>
 </body>
