@@ -155,9 +155,9 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
       <div class="card p-4">
         <h3 class="font-bold">📋 DANH SÁCH HỌC VIÊN ĐÃ CÓ BẰNG — XONG ✅</h3>
         <div class="flex gap-2 mt-3 mb-3 no-print">
-          <select id="cbFilterHe" class="border rounded-lg p-2" onchange="renderHocVienCoBang()"><option value="">Tất cả Hệ số</option><option>B1</option><option>B2</option><option>C</option></select>
-          <select id="cbFilterTT" class="border rounded-lg p-2" onchange="renderHocVienCoBang()"><option value="">Tất cả TT</option><option>TT01</option><option>TT02</option><option>TT03</option></select>
-          <select id="cbFilterZalo" class="border rounded-lg p-2" onchange="renderHocVienCoBang()"><option value="">Tất cả Zalo</option><option>Chưa gửi</option><option>Đã gửi</option></select>
+          <select id="cbFilterHe" class="border rounded-lg p-2" onchange="paintCoBang_()"><option value="">Tất cả Hệ số</option><option>B1</option><option>B2</option><option>C</option></select>
+          <select id="cbFilterTT" class="border rounded-lg p-2" onchange="paintCoBang_()"><option value="">Tất cả TT</option><option>TT01</option><option>TT02</option><option>TT03</option></select>
+          <select id="cbFilterZalo" class="border rounded-lg p-2" onchange="paintCoBang_()"><option value="">Tất cả Zalo</option><option>Chưa gửi</option><option>Đã gửi</option></select>
           <button class="text-white px-4 py-2 rounded-lg" style="background:#16A34A" onclick="exportExcel('HocVienCoBang')">Xuất Excel DS Có Bằng</button>
         </div>
         <div class="overflow-x-auto"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">Tên</th><th class="text-left">Hệ số</th><th class="text-left">TT Sát Hạch</th><th class="text-left">Ngày có bằng</th><th class="text-left">Số bằng</th><th class="text-left">Nhóm</th><th class="text-left">Zalo</th><th class="text-left">Trạng thái</th><th class="text-left">Hành động</th></tr></thead><tbody id="cobangBody"></tbody></table></div>
@@ -190,7 +190,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
       <div class="tpl-band no-print"><div><h3>📝 KẾT QUẢ THI</h3><p>Module 17 • LT 28/30 • MP 45/50 • SH 85/100 • ĐT 90/100</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <h3 class="font-bold">📝 KẾT QUẢ THI — Phiếu điểm chi tiết</h3>
-        <div class="mt-3 no-print"><select id="kqFilterKhoa" class="border rounded-lg p-2" onchange="renderKetQuaThi()"><option value="">Tất cả khóa</option><option>K51</option><option>K52</option><option>K53</option></select></div>
+        <div class="mt-3 no-print"><select id="kqFilterKhoa" class="border rounded-lg p-2" onchange="paintKetQua_()"><option value="">Tất cả khóa</option><option>K51</option><option>K52</option><option>K53</option></select></div>
         <div class="overflow-x-auto mt-3"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">LT /30</th><th class="text-left">MP /50</th><th class="text-left">SH /100</th><th class="text-left">ĐT /100</th><th class="text-left">Kết quả</th><th class="text-left">Ngày thi</th><th class="text-left">Ngày có bằng</th><th class="text-left">Số bằng</th><th class="text-left">Hành động</th></tr></thead><tbody id="ketquaBody"></tbody></table></div>
         <p class="text-xs mt-2" style="color:#65676B">Trượt môn nào hệ thống tự xếp lịch thi lại môn đó. Đạt + có số bằng: bấm Gửi Zalo chúc mừng để chạy capNhatCoBang → XONG xanh lá.</p>
       </div>
@@ -507,10 +507,14 @@ function renderModuleTable(){
 /* Có bằng */
 let cbRowsCache=[];
 async function renderHocVienCoBang(){
-  let rows=[];
-  try{ const d=await apiGet('action=getList&sheet=HocVienCoBang'); if(!d.ok) throw new Error(d.error||'API lỗi'); rows=d.data||[]; }
-  catch(e){ document.getElementById('cobangBody').innerHTML='<tr><td class="p-3" colspan="10" style="color:#DC2626">Không tải được HocVienCoBang từ Sheet. <button class="underline font-bold" onclick="renderHocVienCoBang()">Thử lại</button></td></tr>'; return; }
-  cbRowsCache=rows;
+  if(!cbRowsCache.length){
+    try{ const d=await apiGet('action=getList&sheet=HocVienCoBang'); if(!d.ok) throw new Error(d.error||'API lỗi'); cbRowsCache=d.data||[]; }
+    catch(e){ document.getElementById('cobangBody').innerHTML='<tr><td class="p-3" colspan="10" style="color:#DC2626">Không tải được HocVienCoBang từ Sheet. <button class="underline font-bold" onclick="cbRowsCache=[];renderHocVienCoBang()">Thử lại</button></td></tr>'; return; }
+  }
+  paintCoBang_();
+}
+function paintCoBang_(){
+  let rows=cbRowsCache.slice();
   const he=document.getElementById('cbFilterHe')?.value||'', tt=document.getElementById('cbFilterTT')?.value||'', zalo=document.getElementById('cbFilterZalo')?.value||'';
   rows=rows.filter(r=>(!he||String(r.HeSo)===he)&&(!tt||String(r.MaTT)===tt)&&(!zalo||((zalo==='Đã gửi')===(String(r.DaGuiZalo||'').indexOf('Da gui')>=0))));
   const html=rows.map(r=>'<tr class="border-b" style="background:#F0FDF4"><td class="p-2">'+r.MaHV+'</td><td>'+(r.TenHV||'')+'</td><td>'+(r.HeSo||'')+'</td><td>'+(r.TenTT||r.MaTT||'')+'</td><td>'+fmtVal_('NgayCoBang',r.NgayCoBang)+'</td><td>'+(r.SoBang||'')+'</td><td>'+(r.NhomZalo||'')+'</td><td>'+(r.DaGuiZalo||'')+'</td><td><span class="xong px-2 py-1 rounded-full text-xs">XONG ✅ Đã có bằng</span></td><td><button onclick="guiZaloLai(\''+r.MaHV+'\')" class="text-white px-3 py-1 rounded text-xs" style="background:#1E40AF">Gửi lại Zalo</button></td></tr>').join('');
@@ -523,7 +527,7 @@ async function capNhatCoBang(maHV){
   if(!ma||!ngay||!so){ alert('Nhập đủ MaHV + Ngày có bằng + Số bằng!'); return; }
   try{ const d=await apiPost({action:'capNhatCoBang',maHV:ma,ngayCoBang:ngay,soBang:so}); if(!d.ok) throw new Error(d.error||'Lỗi'); alert('✅ Đã cập nhật '+ma+' → XONG - Đã có bằng '+so+(d.zalo&&d.zalo.sent?' • Đã gửi Zalo':' • Zalo: CHƯA gửi thật (thiếu token/SĐT, đã ghi LichSu)')); }
   catch(e){ alert('❌ Cập nhật có bằng THẤT BẠI: không gọi được API — dữ liệu chưa thay đổi gì.'); }
-  renderHocVienCoBang();
+  cbRowsCache=[]; renderHocVienCoBang();
 }
 async function guiZaloLai(maHV){ try{ const d=await apiPost({action:'sendZaloCoBang',maHV}); alert(d.zalo&&d.zalo.sent?('✅ Đã gửi Zalo: '+d.zalo.text):'⚠️ Chưa gửi thật: thiếu ZaloOAToken hoặc SĐT HV (đã ghi LichSu). Nội dung: Chúc mừng học viên '+maHV+' đã có bằng!'); }catch(e){ alert('❌ Không gọi được API để gửi Zalo cho '+maHV+' — chưa gửi gì cả.'); } }
 /* Modal thêm/sửa */
@@ -574,14 +578,21 @@ async function renderHoSoDauVao(){
 
 async function nhacZaloHoSo(maHV){ try{ const d=await apiPost({action:'nhacZaloHoSo',maHV}); if(!d.ok) throw new Error(d.error||'Backend từ chối'); alert(d.zalo&&d.zalo.sent?('✅ Đã gửi nhắc Zalo cho '+maHV):('⚠️ Chưa gửi thật cho '+maHV+': thiếu ZaloOAToken hoặc SĐT HV (đã ghi LichSu).')); }catch(e){ alert('❌ Nhắc Zalo THẤT BẠI cho '+maHV+': '+e.message); } }
 function chipDiem_(diem, dg){ const ok=String(dg||'').indexOf('Dat')>=0; return diem+' <span class="px-2 py-0.5 rounded-full text-xs" style="'+(ok?'background:#DCFCE7;color:#16A34A':'background:#FEE2E2;color:#DC2626')+'">'+(ok?'Đạt':'Trượt')+'</span>'; }
+let kqRowsCache=[];
 async function renderKetQuaThi(){
-  let rows=[];
-  try{ const d=await apiGet('action=getList&sheet=KetQuaThi'); if(!d.ok) throw new Error(d.error||'API lỗi'); rows=d.data||[]; }
-  catch(e){ document.getElementById('ketquaBody').innerHTML='<tr><td class="p-3" colspan="10" style="color:#DC2626">Không tải được kết quả thi từ Sheet. <button class="underline font-bold" onclick="renderKetQuaThi()">Thử lại</button></td></tr>'; return; }
+  if(!kqRowsCache.length){
+    try{ const d=await apiGet('action=getList&sheet=KetQuaThi'); if(!d.ok) throw new Error(d.error||'API lỗi'); kqRowsCache=d.data||[]; }
+    catch(e){ document.getElementById('ketquaBody').innerHTML='<tr><td class="p-3" colspan="10" style="color:#DC2626">Không tải được kết quả thi từ Sheet. <button class="underline font-bold" onclick="kqRowsCache=[];renderKetQuaThi()">Thử lại</button></td></tr>'; return; }
+  }
+  paintKetQua_();
+}
+function paintKetQua_(){
+  let rows=kqRowsCache.slice();
   const kf=document.getElementById('kqFilterKhoa')?.value||''; const hvMap={}; (FD.hv||[]).forEach(h=>hvMap[h.MaHV]=h.MaKhoa);
   if(kf) rows=rows.filter(r=>hvMap[r.MaHV]===kf);
   document.getElementById('ketquaBody').innerHTML=rows.map(r=>{ const dat=String(r.KetQua)==='Do'; return '<tr class="border-b"><td class="p-2">'+r.MaHV+'</td><td>'+chipDiem_(r.DiemLT,r.DanhGiaLT)+'</td><td>'+chipDiem_(r.DiemMP,r.DanhGiaMP)+'</td><td>'+chipDiem_(r.DiemSH,r.DanhGiaSH)+'</td><td>'+chipDiem_(r.DiemDT,r.DanhGiaDT)+'</td><td><b style="color:'+(dat?'#16A34A':'#DC2626')+'">'+(dat?'ĐỖ':'TRƯỢT')+'</b></td><td>'+fmtVal_('NgayThi',r.NgayThi)+'</td><td>'+fmtVal_('NgayCoBang',r.NgayCoBang)+'</td><td>'+(r.SoBang||'')+'</td><td><button class="px-2 py-1 rounded text-xs border" onclick="window.print()">In phiếu điểm</button> <button class="px-2 py-1 rounded text-xs text-white" style="background:#16A34A" onclick="guiZaloLai(\''+r.MaHV+'\')">Gửi Zalo chúc mừng</button></td></tr>'; }).join('')||'<tr><td class="p-3" colspan="10">Chưa có kết quả thi theo bộ lọc này</td></tr>';
 }
+
 async function renderThuChiData(){ try{ const d=await apiGet('action=getThuChi'); if(!d.ok) return; const setT=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
   setT('tcThu', fmtTr_(d.tongThu)); setT('tcChi', fmtTr_(d.tongChi)); setT('tcLN', fmtTr_(d.loiNhuan)+' • '+(d.tyLe??d.tyLeLoiNhuan??'')+'%'); setT('tcNo', fmtTr_(d.conPhaiThu)); }catch(e){} }
 
