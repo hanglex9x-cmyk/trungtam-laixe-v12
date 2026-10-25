@@ -69,20 +69,20 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
     </div>
         <!-- FILTER 3 CẤP -->
     <div class="card p-4 mb-4 flex gap-3 no-print">
-      <select id="filterTT" class="input-48 border rounded-lg px-3 flex-1"><option value="">Tất cả TT Sát Hạch</option><option>TT01 Hóc Môn (180 HV)</option><option>TT02 Thành Công (80 HV)</option></select>
-      <select id="filterHeSo" class="input-48 border rounded-lg px-3 flex-1"><option value="">Tất cả Hệ số</option><option>B1 Số tự động</option><option>B2 Số sàn</option><option>C</option><option>C1</option><option>D</option><option>BE/CE/DE</option></select>
-      <select id="filterKhoa" class="input-48 border rounded-lg px-3 flex-1"><option>K51 - B2 - Hóc Môn - 120 HV - Đang học</option><option>K52 - B1 - Thành Công - 80 HV</option><option>K53 - C - Hóc Môn - 80 HV</option></select>
+      <select id="filterTT" class="input-48 border rounded-lg px-3 flex-1" onchange="rebuildKhoaOptions()"><option value="">Tất cả TT Sát Hạch</option></select>
+      <select id="filterHeSo" class="input-48 border rounded-lg px-3 flex-1" onchange="rebuildKhoaOptions()"><option value="">Tất cả Hệ số</option></select>
+      <select id="filterKhoa" class="input-48 border rounded-lg px-3 flex-1"><option value="">Tất cả Khóa</option></select>
       <button class="px-4 rounded-lg text-white font-semibold" style="background:#1E40AF" onclick="applyFilter()">Lọc</button>
     </div>
 
     <!-- ===== VIEW: DASHBOARD ===== -->
     <section id="view-dashboard" class="space-y-4">
       <div class="grid grid-cols-5 gap-4">
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Tổng học viên</p><p class="text-2xl font-bold" id="kpiKhoa">248</p><p class="text-xs" style="color:#16A34A" id="kpiSub1">+12 mới</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Lịch học hôm nay</p><p class="text-2xl font-bold" id="kpiHV">18 buổi</p><p class="text-xs" id="kpiSub2">8 đang diễn ra • 10 sắp tới</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Tỷ lệ đậu sát hạch</p><p class="text-2xl font-bold" id="kpiGV">86%</p><p class="text-xs" style="color:#16A34A" id="kpiSub3">+3,2%</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Xe đang sử dụng</p><p class="text-2xl font-bold" id="kpiXe">12/15 xe</p><p class="text-xs" style="color:#DC2626" id="kpiSub4">3 bảo trì</p></div>
-        <div class="card p-4"><p class="text-xs" style="color:#65676B">Doanh thu tháng</p><p class="text-2xl font-bold" id="kpiLich">125,4 triệu</p><p class="text-xs" style="color:#16A34A" id="kpiSub5">+8,5%</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Tổng học viên</p><p class="text-2xl font-bold" id="kpiKhoa">…</p><p class="text-xs" style="color:#16A34A" id="kpiSub1">Đang tải dữ liệu thật…</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Lịch học hôm nay</p><p class="text-2xl font-bold" id="kpiHV">…</p><p class="text-xs" id="kpiSub2">Đang tải dữ liệu thật…</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Tỷ lệ đậu sát hạch</p><p class="text-2xl font-bold" id="kpiGV">…</p><p class="text-xs" style="color:#16A34A" id="kpiSub3">Đang tải dữ liệu thật…</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Xe đang sử dụng</p><p class="text-2xl font-bold" id="kpiXe">…</p><p class="text-xs" style="color:#DC2626" id="kpiSub4">Đang tải dữ liệu thật…</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:#65676B">Doanh thu tháng</p><p class="text-2xl font-bold" id="kpiLich">…</p><p class="text-xs" style="color:#16A34A" id="kpiSub5">Đang tải dữ liệu thật…</p></div>
       </div>
 
 <div class="card p-4">
@@ -402,7 +402,58 @@ function showTab(tab, btn){
   if(tab==='cobang') renderHocVienCoBang(); if(tab==='hoso') renderHoSoDauVao(); if(tab==='ketqua') renderKetQuaThi();
   window.scrollTo(0,0);
 }
-function applyFilter(){ alert('Đã lọc theo TT Sát Hạch → Hệ số → Khóa (áp dụng cho danh sách đang mở)'); renderModuleTable(); renderHocVienCoBang(); }
+/* ===== BO LOC THAT 3 CAP: TT Sat Hach -> He so -> Khoa (du lieu nap tu API) ===== */
+let FD = {tt:[], khoa:[], hv:[], kq:[], lichKhoa:[], hoaDon:[], loaded:false};
+const HE_LABEL = {B1:'B1 Số tự động', B2:'B2 Số sàn', C:'C', C1:'C1', D:'D'};
+async function loadFilterData(){
+  try{
+    const [tt,khoa,hv,kq,lk,hd] = await Promise.all([
+      apiGet('action=getList&sheet=TrungTamSatHach'), apiGet('action=getList&sheet=KhoaHoc'),
+      apiGet('action=getList&sheet=HocVien'), apiGet('action=getList&sheet=KetQuaThi'),
+      apiGet('action=getList&sheet=LichTheoKhoa'), apiGet('action=getList&sheet=HoaDon')]);
+    FD = {tt:tt.data||[], khoa:khoa.data||[], hv:hv.data||[], kq:kq.data||[], lichKhoa:lk.data||[], hoaDon:hd.data||[], loaded:true};
+    const selTT=document.getElementById('filterTT');
+    FD.tt.forEach(t=>{ const c=FD.hv.filter(h=>h.MaTT_SatHach===t.MaTT).length; const o=document.createElement('option'); o.value=t.MaTT; o.textContent=t.MaTT+' '+t.TenTT+' ('+c+' HV)'; selTT.appendChild(o); });
+    const selHe=document.getElementById('filterHeSo'); [...new Set(FD.hv.map(h=>h.HeSo).filter(Boolean))].forEach(h=>{ const o=document.createElement('option'); o.value=h; o.textContent=HE_LABEL[h]||h; selHe.appendChild(o); });
+    rebuildKhoaOptions();
+  }catch(e){ /* API chua san sang: giu o loc mac dinh */ }
+}
+function rebuildKhoaOptions(){
+  if(!FD.loaded) return;
+  const tt=document.getElementById('filterTT').value, he=document.getElementById('filterHeSo').value;
+  const sel=document.getElementById('filterKhoa'); const cur=sel.value;
+  sel.innerHTML='<option value="">Tất cả Khóa</option>';
+  FD.khoa.filter(k=>(!tt||k.MaTT_SatHach===tt)&&(!he||k.HeSo===he)).forEach(k=>{
+    const o=document.createElement('option'); o.value=k.MaKhoa;
+    o.textContent=k.MaKhoa+' - '+k.HeSo+' - '+k.TenTT_SatHach+' - '+k.SoHV+' HV - '+k.TrangThai; sel.appendChild(o); });
+  if([...sel.options].some(o=>o.value===cur)) sel.value=cur;
+}
+function filterVals_(){ return {tt:document.getElementById('filterTT').value, he:document.getElementById('filterHeSo').value, kh:document.getElementById('filterKhoa').value}; }
+function applyFilter(){
+  const f=filterVals_();
+  const dashEl=document.getElementById('view-dashboard');
+  const dashVisible = dashEl && !dashEl.classList.contains('hidden');
+  if(!f.tt && !f.he && !f.kh){ if(dashVisible) renderDashboard(); if(typeof moduleRows!=='undefined' && moduleRows.length) renderModuleTable(); renderHocVienCoBang(); return; }
+  if(!FD.loaded){ alert('Dữ liệu lọc đang tải từ Sheet, đợi vài giây rồi bấm Lọc lại'); return; }
+  const set=FD.hv.filter(h=>(!f.tt||h.MaTT_SatHach===f.tt)&&(!f.he||h.HeSo===f.he)&&(!f.kh||h.MaKhoa===f.kh));
+  const maSet=new Set(set.map(h=>h.MaHV));
+  if(dashVisible){
+    const khoaSet=new Set(set.map(h=>h.MaKhoa));
+    const lich=FD.lichKhoa.filter(l=>khoaSet.has(l.MaKhoa));
+    const kq=FD.kq.filter(r=>maSet.has(r.MaHV)); const doC=kq.filter(r=>String(r.KetQua)==='Do').length;
+    const xeSet=new Set(set.map(h=>h.BienSo).filter(Boolean)); const gvSet=new Set(set.map(h=>h.MaGV).filter(Boolean));
+    const hd=FD.hoaDon.filter(x=>maSet.has(x.MaHV));
+    const thu=hd.reduce((s,x)=>s+(Number(x.DaThu)||0),0); const con=hd.reduce((s,x)=>s+(Number(x.ConLai)||0),0);
+    const cb=set.filter(h=>String(h.TrangThaiHoc||'').indexOf('XONG')>=0).length;
+    document.getElementById('kpiKhoa').textContent=set.length; document.getElementById('kpiSub1').textContent=khoaSet.size+' khóa trong phạm vi lọc';
+    document.getElementById('kpiHV').textContent=lich.length+' buổi'; document.getElementById('kpiSub2').textContent='LT '+lich.filter(l=>l.LoaiLich==='LT').length+' • TH '+lich.filter(l=>l.LoaiLich==='TH').length;
+    document.getElementById('kpiGV').textContent=(kq.length?Math.round(doC/kq.length*100):0)+'%'; document.getElementById('kpiSub3').textContent=kq.length+' HV đã có kết quả thi';
+    document.getElementById('kpiXe').textContent=xeSet.size+' xe'; document.getElementById('kpiSub4').textContent=gvSet.size+' giáo viên phụ trách'; document.getElementById('kpiSub4').style.color='#65676B';
+    document.getElementById('kpiLich').textContent=fmtTr_(thu); document.getElementById('kpiSub5').textContent='Còn phải thu '+fmtTr_(con);
+    const cbEl=document.getElementById('cbTong'); if(cbEl) cbEl.textContent=cb+'/'+set.length+' ('+(set.length?Math.round(cb/set.length*100):0)+'%)';
+  }
+  if(typeof moduleRows!=='undefined' && moduleRows.length) renderModuleTable();
+}
 /* Heatmap demo Oct 2026 */
 (function(){ const h=document.getElementById('heatmap'); if(!h) return; for(let d=1;d<=31;d++){ const v=(d*7)%5; const c=['#EBEDF0','#9BE9A8','#40C463','#30A14E','#216E39'][v]; h.innerHTML+='<div title="Ngày '+d+'/10: '+(10+v*8)+' lịch" style="height:26px;border-radius:6px;background:'+c+';display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">'+d+'</div>'; } })();
 /* Dashboard */
@@ -422,7 +473,9 @@ async function refreshAlerts(){ try{ const d=await apiGet('action=checkAllCanhBa
 /* Module generic */
 async function loadModule(sheet, btn){ currentSheet=sheet; showTab('module', btn); document.getElementById('moduleTitle').textContent='Module • '+sheet; try{ const d=await apiGet('action=getList&sheet='+encodeURIComponent(sheet)); moduleRows=d.data||[]; }catch(e){ moduleRows=DEMO[sheet]||[{ThongBao:'Chưa có dữ liệu mẫu cho module này — kết nối API_URL để lấy dữ liệu thật từ Sheet '+sheet}]; } renderModuleTable(); }
 function renderModuleTable(){
-  const q=(document.getElementById('moduleSearch').value||'').toLowerCase(); const rows=moduleRows.filter(r=>JSON.stringify(r).toLowerCase().includes(q));
+  const q=(document.getElementById('moduleSearch').value||'').toLowerCase(); const fv=filterVals_();
+  const rows=moduleRows.filter(r=>JSON.stringify(r).toLowerCase().includes(q))
+    .filter(r=>(!fv.tt||r.MaTT_SatHach===fv.tt||r.MaTT===fv.tt) && (!fv.he||r.HeSo===fv.he||r.HeSoDK===fv.he) && (!fv.kh||r.MaKhoa===fv.kh));
   if(!rows.length){ document.getElementById('moduleHead').innerHTML=''; document.getElementById('moduleBody').innerHTML='<tr><td class="p-3">Không có dữ liệu</td></tr>'; return; }
   const keys=Object.keys(rows[0]); document.getElementById('moduleHead').innerHTML='<tr>'+keys.map(k=>'<th class="p-2 text-left">'+k+'</th>').join('')+'<th></th></tr>';
   document.getElementById('moduleBody').innerHTML=rows.map((r,i)=>'<tr class="border-b">'+keys.map(k=>{ const v=r[k]??''; const isXong=String(v).includes('XONG'); return '<td class="p-2">'+(isXong?'<span class="xong px-2 py-1 rounded-full text-xs">'+v+' ✅</span>':v)+'</td>'; }).join('')+'<td class="p-2"><button class="text-xs px-2 py-1 rounded text-white" style="background:#1E40AF" onclick="openEdit('+i+')">Sửa</button></td></tr>').join('');
@@ -460,7 +513,7 @@ function renderHoSoDauVao(){ let rows=DEMO.HoSoDauVao; document.getElementById('
 async function nhacZaloHoSo(maHV){ try{ await apiPost({action:'nhacZaloHoSo',maHV}); alert('Đã gửi nhắc Zalo bổ sung hồ sơ cho '+maHV); }catch(e){ alert('Demo: Đã nhắc Zalo '+maHV+' — bổ sung giấy tờ thiếu/hết hạn trước 30/10.'); } }
 function renderKetQuaThi(){ let rows=DEMO.KetQuaThi; document.getElementById('ketquaBody').innerHTML=rows.map(r=>'<tr class="border-b"><td class="p-2">'+r.MaHV+'</td><td>'+r.DiemLT+' <span class="xong px-2 py-0.5 rounded-full text-xs">Đạt</span></td><td>'+r.DiemMP+' <span class="xong px-2 py-0.5 rounded-full text-xs">Đạt</span></td><td>'+r.DiemSH+' <span class="xong px-2 py-0.5 rounded-full text-xs">Đạt</span></td><td>'+r.DiemDT+' <span class="xong px-2 py-0.5 rounded-full text-xs">Đạt</span></td><td><b style="color:#16A34A">'+r.KetQua+'</b></td><td>'+r.NgayThi+'</td><td>'+r.NgayCoBang+'</td><td>'+r.SoBang+'</td><td><button class="px-2 py-1 rounded text-xs border" onclick="window.print()">In phiếu điểm</button> <button class="px-2 py-1 rounded text-xs text-white" style="background:#16A34A" onclick="guiZaloLai(\''+r.MaHV+'\')">Gửi Zalo chúc mừng</button></td></tr>').join(''); }
 function renderThuChi(){ showTab('thuchi'); }
-renderDashboard(); renderHocVienCoBang();
+renderDashboard(); renderHocVienCoBang(); loadFilterData();
 if(window.lucide) lucide.createIcons();
 </script>
 </body>
