@@ -17,6 +17,12 @@ body{background:#F0F2F5;color:#050505}
 .navbtn{width:100%;text-align:left;padding:10px 12px;border-radius:10px;font-size:13px}
 .navbtn:hover{background:#F0F2F5}.navbtn.active{background:#1E40AF;color:#fff}
 @media(max-width:767px){.pc{display:none}}
+.tpl-band{background:#1E40AF;border-radius:16px;padding:14px 18px;color:#fff;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.tpl-band h3{font-weight:800;font-size:17px;letter-spacing:.2px}
+.tpl-band p{font-size:12px;color:#BFDBFE}
+.tpl-band .pill{background:rgba(255,255,255,.15);border-radius:10px;padding:6px 10px;font-size:12px}
+thead th{background:#EFF6FF!important;color:#1E40AF}
+.warnpink{background:#FEE2E2;border-radius:12px;padding:12px}
 @media print{.no-print{display:none}body{background:#fff}}
 </style>
 </head>
@@ -149,6 +155,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: MODULE GENERIC (24 module dùng chung) ===== -->
     <section id="view-module" class="hidden">
+      <div class="tpl-band no-print"><div><h3>📋 DỮ LIỆU MODULE</h3><p>24 Module • Dữ liệu theo sheet cùng tên</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <div class="flex justify-between items-center"><h3 class="font-bold" id="moduleTitle">Module</h3><div class="flex gap-2 no-print"><button class="px-3 py-2 rounded-lg text-white text-sm" style="background:#1E40AF" onclick="openAdd()">+ Thêm mới</button><button class="px-3 py-2 rounded-lg text-white text-sm" style="background:#16A34A" onclick="exportExcel(currentSheet)">Xuất Excel</button></div></div>
         <input id="moduleSearch" placeholder="Tìm kiếm..." class="input-48 border rounded-lg px-3 w-full mt-3" oninput="renderModuleTable()">
@@ -159,6 +166,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: CÓ BẰNG ===== -->
     <section id="view-cobang" class="hidden space-y-4">
+      <div class="tpl-band no-print"><div><h3>✅ HỌC VIÊN CÓ BẰNG + ZALO</h3><p>Module 18 • XONG xanh lá • Nhóm theo tháng • Zalo OA 3 kịch bản</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <h3 class="font-bold">📋 DANH SÁCH HỌC VIÊN ĐÃ CÓ BẰNG — XONG ✅</h3>
         <div class="flex gap-2 mt-3 mb-3 no-print">
@@ -184,6 +192,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: HỒ SƠ ĐẦU VÀO (Module 3) ===== -->
     <section id="view-hoso" class="hidden space-y-4">
+      <div class="tpl-band no-print"><div><h3>🗂️ HỒ SƠ ĐẦU VÀO</h3><p>Module 3 • Checklist giấy tờ • Hạn bổ sung 30/10</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <h3 class="font-bold">🗂️ HỒ SƠ ĐẦU VÀO — Checklist giấy tờ</h3>
         <div class="overflow-x-auto mt-3"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">CCCD</th><th class="text-left">Khám SK</th><th class="text-left">Ảnh 3x4</th><th class="text-left">Đơn đề nghị</th><th class="text-left">Lý lịch</th><th class="text-left">Hạn bổ sung</th><th class="text-left">Hành động</th></tr></thead><tbody id="hosoBody"></tbody></table></div>
@@ -193,6 +202,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: KẾT QUẢ THI (Module 17) ===== -->
     <section id="view-ketqua" class="hidden space-y-4">
+      <div class="tpl-band no-print"><div><h3>📝 KẾT QUẢ THI</h3><p>Module 17 • LT 28/30 • MP 45/50 • SH 85/100 • ĐT 90/100</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <h3 class="font-bold">📝 KẾT QUẢ THI — Phiếu điểm chi tiết</h3>
         <div class="overflow-x-auto mt-3"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">LT /30</th><th class="text-left">MP /50</th><th class="text-left">SH /100</th><th class="text-left">ĐT /100</th><th class="text-left">Kết quả</th><th class="text-left">Ngày thi</th><th class="text-left">Ngày có bằng</th><th class="text-left">Số bằng</th><th class="text-left">Hành động</th></tr></thead><tbody id="ketquaBody"></tbody></table></div>
@@ -202,6 +212,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: THU CHI (Module 19) ===== -->
     <section id="view-thuchi" class="hidden space-y-4">
+      <div class="tpl-band no-print"><div><h3>💰 THU CHI</h3><p>Module 19 • Thu 450tr • Chi 280tr • Lợi nhuận 170tr (37,7%)</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="grid grid-cols-4 gap-4">
         <div class="card p-4"><p class="text-xs" style="color:#65676B">TỔNG THU</p><p class="text-2xl font-bold" style="color:#1E40AF">450tr</p></div>
         <div class="card p-4"><p class="text-xs" style="color:#65676B">TỔNG CHI</p><p class="text-2xl font-bold" style="color:#DC2626">280tr</p></div>
@@ -232,6 +243,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: BÁO CÁO SỞ GTVT (Module 20) ===== -->
     <section id="view-baocao" class="hidden space-y-4">
+      <div class="tpl-band no-print"><div><h3>📑 BÁO CÁO SỞ GTVT</h3><p>Module 20 • Mẫu Sở GTVT • Đỗ 92% • KM DAT trung bình</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="card p-4"><h3 class="font-bold">📑 BÁO CÁO SỞ GTVT</h3>
         <div class="grid grid-cols-4 gap-3 mt-3">
           <div class="p-3 rounded-lg" style="background:#F0F2F5"><p class="text-xs">Tổng HV đào tạo</p><p class="text-xl font-bold">1.248</p></div>
@@ -246,6 +258,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: IN ẤN (Module 22) ===== -->
     <section id="view-inan" class="hidden">
+      <div class="tpl-band no-print"><div><h3>🖨️ IN ẤN</h3><p>Module 22 • Danh sách thi • Sổ GTVT • Biên bản DAT • Phiếu điểm</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="card p-4"><h3 class="font-bold">🖨️ IN ẤN</h3>
         <div class="grid grid-cols-3 gap-3 mt-3">
           <button class="p-4 rounded-lg border font-semibold" onclick="window.print()">Danh sách thi</button>
@@ -262,6 +275,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: CẢNH BÁO TỰ ĐỘNG (Module 23) ===== -->
     <section id="view-canhbao" class="hidden">
+      <div class="tpl-band no-print"><div><h3>🚨 CẢNH BÁO TỰ ĐỘNG</h3><p>Module 23 • checkAllCanhBao() • 12 loại cảnh báo</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="card p-4"><h3 class="font-bold">🚨 CẢNH BÁO TỰ ĐỘNG — 12 LOẠI (checkAllCanhBao)</h3>
         <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
           <div class="p-3 rounded-lg" style="background:#FEE2E2">1. Cabin 102/120h 85% thiếu 18h hạn 20/01 — Cấm DAT</div>
@@ -283,6 +297,7 @@ body{background:#F0F2F5;color:#050505}
 
     <!-- ===== VIEW: CÀI ĐẶT ===== -->
     <section id="view-caidat" class="hidden space-y-4">
+      <div class="tpl-band no-print"><div><h3>⚙️ PHÂN QUYỀN + LỊCH SỬ + CẤU HÌNH</h3><p>Module 24 • Sếp / Quản lý / Kế toán / GV / HV</p></div><span class="pill">Tháng 10 2024 • Nguyễn Minh Anh</span></div>
       <div class="card p-4"><h3 class="font-bold">⚙️ Cài đặt</h3>
         <label class="text-sm font-semibold mt-3 block">Màu chủ đạo (lưu vào Sheet CauHinh của dự án này)</label>
         <input type="color" id="colorPicker" value="#1E40AF" class="w-20 h-12">
