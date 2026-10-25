@@ -36,6 +36,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
     <div class="mt-5 space-y-1" id="sidebar24">
       <button class="navbtn active" onclick="showTab('dashboard',this)">📊 21. Lịch tổng quan Sếp</button>
       <button class="navbtn" onclick="loadModule('TrungTamSatHach',this)">🏢 TT Sát Hạch (TT01 30% • TT02 25% • TT03 28%)</button>
+      <button class="navbtn" onclick="showLichTuan(this)">🗓️ Lịch Tuần HV + GV</button>
       <button class="navbtn" onclick="loadModule('KhoaHoc',this)">📚 1. Khóa học</button>
       <button class="navbtn" onclick="loadModule('HocVien',this)">👨‍🎓 2. Học viên</button>
       <button class="navbtn" onclick="showTab('hoso',this)">🗂️ 3. Hồ sơ đầu vào</button>
@@ -135,6 +136,22 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
       <h3 class="font-bold text-lg">🚨 6 Cảnh Báo Đỏ — Final Patch</h3>
       <div class="grid grid-cols-3 gap-4" id="cards6"><div class="card p-4">Đang tải cảnh báo thật…</div></div>
       <div class="flex gap-2 no-print"><button class="px-4 py-2 rounded-lg text-white" style="background:#1E40AF" onclick="window.print()">🖨️ In PDF</button><button class="px-4 py-2 rounded-lg text-white" style="background:#16A34A" onclick="exportExcel('HocVienCoBang')">⬇️ Xuất Excel</button><button class="px-4 py-2 rounded-lg border" onclick="refreshAlerts()">🔄 Quét 12 cảnh báo</button></div>
+    </section>
+
+    <!-- ===== VIEW: LỊCH TUẦN HV + GV (kiểu BrightVista) ===== -->
+    <section id="view-lichtuan" class="hidden space-y-4">
+      <div class="tpl-band no-print"><div><h3>🗓️ LỊCH TUẦN — HỌC VIÊN + GIÁO VIÊN</h3><p>Lịch dạy / học theo tuần • Dữ liệu thật từ Sheet LichGiaoVien</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
+      <div class="card p-4">
+        <div class="flex items-center gap-3 flex-wrap no-print">
+          <button class="px-3 py-2 rounded-lg border font-bold" onclick="shiftWeek(-1)">‹</button>
+          <h3 class="font-bold" id="weekLabel">Tuần …</h3>
+          <button class="px-3 py-2 rounded-lg border font-bold" onclick="shiftWeek(1)">›</button>
+          <select id="ltFilterGV" class="border rounded-lg p-2 ml-auto" onchange="renderLichTuan()"><option value="">Tất cả giáo viên</option></select>
+          <button class="px-4 py-2 rounded-lg text-white font-bold" style="background:#1E40AF" onclick="loadModule('LichGiaoVien');setTimeout(openAdd,700)">+ Thêm lịch</button>
+        </div>
+        <div id="weekGrid" class="grid grid-cols-1 md:grid-cols-7 gap-3 mt-4"></div>
+        <p class="text-xs mt-3" style="color:#65676B">Màu thẻ: <span style="color:#2563EB;font-weight:700">xanh dương = Lý thuyết</span> • <span style="color:#D97706;font-weight:700">vàng = Thực hành</span> • <span style="color:#16A34A;font-weight:700">xanh lá = DAT</span>. Mỗi thẻ: giờ học • biển số xe • tên học viên • giáo viên phụ trách.</p>
+      </div>
     </section>
 
     <!-- ===== VIEW: MODULE GENERIC (24 module dùng chung) ===== -->
@@ -373,7 +390,7 @@ function renderXe(){ loadModule('XeTapLai'); }
 async function apiPost(body){ if(API_URL.includes('DEPLOY_ID')) throw new Error('demo'); const r=await fetch(API_URL,{method:'POST',body:JSON.stringify(body)}); return r.json(); }
 async function apiGet(q){ if(API_URL.includes('DEPLOY_ID')) throw new Error('demo'); const r=await fetch(API_URL+'?'+q); return r.json(); }
 function showTab(tab, btn){
-  ['dashboard','module','cobang','caidat','hoso','ketqua','thuchi','baocao','inan','canhbao'].forEach(t=>{ const el=document.getElementById('view-'+t); if(el) el.classList.toggle('hidden', t!==tab); });
+  ['dashboard','module','cobang','caidat','hoso','ketqua','thuchi','baocao','inan','canhbao','lichtuan'].forEach(t=>{ const el=document.getElementById('view-'+t); if(el) el.classList.toggle('hidden', t!==tab); });
   document.querySelectorAll('#sidebar24 .navbtn').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active');
   if(tab==='cobang') renderHocVienCoBang(); if(tab==='hoso') renderHoSoDauVao(); if(tab==='ketqua') renderKetQuaThi(); if(tab==='canhbao') renderCanhBao(); if(tab==='thuchi') renderThuChiData();
   window.scrollTo(0,0);
@@ -597,6 +614,43 @@ async function renderThuChiData(){ try{ const d=await apiGet('action=getThuChi')
   setT('tcThu', fmtTr_(d.tongThu)); setT('tcChi', fmtTr_(d.tongChi)); setT('tcLN', fmtTr_(d.loiNhuan)+' • '+(d.tyLe??d.tyLeLoiNhuan??'')+'%'); setT('tcNo', fmtTr_(d.conPhaiThu)); }catch(e){} }
 
 function renderThuChi(){ showTab('thuchi'); }
+/* ===== LỊCH TUẦN HV + GV (kiểu BrightVista) ===== */
+let weekOffset=0;
+const LT_COLORS={LT:{b:'#3B82F6',bg:'#EFF6FF'},TH:{b:'#F59E0B',bg:'#FFFBEB'},DAT:{b:'#16A34A',bg:'#F0FDF4'}};
+function parseDMY_(s){ const p=String(s||'').split('/'); if(p.length!==3) return null; const d=new Date(+p[2],+p[1]-1,+p[0]); return isNaN(d)?null:d; }
+function fmtDMY_(d){ return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); }
+function mondayOf_(d){ const x=new Date(d); const dow=(x.getDay()+6)%7; x.setDate(x.getDate()-dow); return x; }
+function baseMonday_(){ const cnt={}; (FD.lichGV||[]).forEach(r=>{ const d=parseDMY_(r.Ngay); if(!d) return; const k=fmtDMY_(mondayOf_(d)); cnt[k]=(cnt[k]||0)+1; });
+  let best=null, bn=-1; Object.keys(cnt).forEach(k=>{ if(cnt[k]>bn){ bn=cnt[k]; best=k; } });
+  return best? parseDMY_(best) : new Date(2026,9,19); }
+async function showLichTuan(btn){ showTab('lichtuan', btn);
+  if(!FD.lichGV || !FD.lichGV.length){ try{ const d=await apiGet('action=getList&sheet=LichGiaoVien'); FD.lichGV=d.data||[]; }catch(e){} }
+  if(!FD.gv || !FD.gv.length){ try{ const g=await apiGet('action=getList&sheet=GiaoVien'); FD.gv=g.data||[]; }catch(e){} }
+  if(!FD.hv || !FD.hv.length){ try{ const h=await apiGet('action=getList&sheet=HocVien'); FD.hv=h.data||[]; }catch(e){} }
+  const sel=document.getElementById('ltFilterGV');
+  if(sel && sel.options.length<=1){ (FD.gv||[]).forEach(g=>{ const o=document.createElement('option'); o.value=g.MaGV; o.textContent=g.MaGV+' • '+g.TenGV; sel.appendChild(o); }); }
+  renderLichTuan(); }
+function renderLichTuan(){
+  const mon=mondayOf_(baseMonday_()); mon.setDate(mon.getDate()+weekOffset*7);
+  const sun=new Date(mon); sun.setDate(mon.getDate()+6);
+  const lbl=document.getElementById('weekLabel'); if(lbl) lbl.textContent='Tuần '+fmtDMY_(mon)+' – '+fmtDMY_(sun);
+  const gvMap={}; (FD.gv||[]).forEach(g=>gvMap[g.MaGV]=g.TenGV);
+  const hvMap={}; (FD.hv||[]).forEach(h=>hvMap[h.MaHV]=h.TenHV);
+  const gvF=document.getElementById('ltFilterGV')?.value||'';
+  const byDay={}; (FD.lichGV||[]).filter(r=>!gvF||r.MaGV===gvF).forEach(r=>{ (byDay[r.Ngay]=byDay[r.Ngay]||[]).push(r); });
+  const names=['T2','T3','T4','T5','T6','T7','CN'];
+  let out='';
+  for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(mon.getDate()+i); const key=fmtDMY_(d);
+    const rows=(byDay[key]||[]).slice().sort((a,b)=>String(a.GioBD).localeCompare(String(b.GioBD)));
+    const isSun=i===6;
+    out+='<div class="rounded-2xl p-2" style="border:1.5px dashed #CBD5E1;background:#fff;min-height:120px"><div class="text-center rounded-xl py-1 mb-2" style="'+(isSun?'background:#1E40AF;color:#fff':'background:#F0F2F5')+'"><div class="text-xs font-semibold">'+names[i]+'</div><div class="text-lg font-bold leading-none">'+d.getDate()+'</div></div>';
+    if(!rows.length) out+='<p class="text-xs text-center" style="color:#94A3B8">Không có lịch</p>';
+    rows.forEach(r=>{ const c=LT_COLORS[r.LoaiLich]||{b:'#64748B',bg:'#F8FAFC'}; const gvTen=gvMap[r.MaGV]||r.MaGV||''; const ini=(gvTen.trim().split(' ').pop()||'?').charAt(0);
+      out+='<div class="rounded-xl p-2 mb-2" style="background:'+c.bg+';border-left:4px solid '+c.b+'"><p class="font-bold text-sm">'+(r.LoaiLich||'Buổi học')+'</p><p class="text-xs" style="color:#475569">'+(r.GioBD||'')+'–'+(r.GioKT||'')+' • '+(r.BienSo||'')+'</p><p class="text-xs" style="color:#475569">'+(hvMap[r.MaHV]||r.MaHV||'')+'</p><div class="flex items-center gap-1 mt-1"><span class="inline-flex items-center justify-center rounded-full text-white text-xs font-bold" style="width:20px;height:20px;background:'+c.b+'">'+ini+'</span><span class="text-xs font-semibold">'+gvTen+'</span>'+(String(r.TrangThai||'').indexOf('Hoan thanh')>=0?'<span class="text-xs px-2 py-0.5 rounded-full ml-auto" style="background:#DCFCE7;color:#16A34A">Hoàn thành</span>':'')+'</div></div>'; });
+    out+='</div>'; }
+  const wg=document.getElementById('weekGrid'); if(wg) wg.innerHTML=out;
+}
+function shiftWeek(n){ weekOffset+=n; renderLichTuan(); }
 renderDashboard(); renderHocVienCoBang(); loadFilterData(); loadSettings();
 if(window.lucide) lucide.createIcons();
 </script>
