@@ -16,7 +16,13 @@ body{background:#F0F2F5;color:#050505}
 .do{color:#DC2626;background:#FEE2E2}
 .navbtn{width:100%;text-align:left;padding:10px 12px;border-radius:10px;font-size:13px}
 .navbtn:hover{background:#F0F2F5}.navbtn.active{background:#1E40AF;color:#fff}
-@media(max-width:767px){.pc{display:none}}
+@media(max-width:767px){.pc{display:none}
+  main{margin-left:0!important;width:100%!important;padding:12px!important}
+  aside{transform:translateX(-105%);transition:transform .25s ease;z-index:70}
+  aside.open{transform:none;box-shadow:0 0 50px rgba(0,0,0,.35)}
+  .grid.grid-cols-3,.grid.grid-cols-4,.grid.grid-cols-5{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .tpl-band{flex-direction:column;align-items:flex-start;gap:8px}
+}
 .tpl-band{background:#1E40AF;border-radius:16px;padding:14px 18px;color:#fff;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .tpl-band h3{font-weight:800;font-size:17px;letter-spacing:.2px}
 .tpl-band p{font-size:12px;color:#BFDBFE}
@@ -27,10 +33,18 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 </style>
 </head>
 <body class="pb-20 md:pb-0">
+<!-- MOBILE TOP BAR -->
+<div class="md:hidden sticky top-0 flex items-center gap-3 px-4 py-3 no-print" style="background:#1E40AF;z-index:65">
+  <button onclick="toggleSidebar()" class="text-white leading-none" style="font-size:24px" aria-label="Menu">☰</button>
+  <div class="text-white font-bold">🚗 TRUNG TÂM LÁI XE</div>
+  <button onclick="showTab('caidat')" class="ml-auto text-white" style="font-size:20px" aria-label="Cài đặt">⚙️</button>
+</div>
+<div id="sbOverlay" class="hidden fixed inset-0 no-print" style="background:rgba(0,0,0,.45);z-index:69" onclick="toggleSidebar(false)"></div>
 
 <!-- ============ PC LAYOUT ============ -->
-<div class="hidden md:flex">
+<div class="md:flex">
   <aside class="w-[280px] min-h-screen bg-white p-4 fixed overflow-y-auto no-print" style="max-height:100vh">
+    <button class="md:hidden float-right text-2xl leading-none px-2" onclick="toggleSidebar(false)" aria-label="Đóng menu">✕</button>
     <h1 class="font-bold text-[#1E40AF] text-xl">🚗 TRUNG TÂM LÁI XE</h1>
     <p class="text-xs" style="color:#65676B">V12.2 Final • 24 Module • Đa TT Sát Hạch</p>
     <div class="mt-5 space-y-1" id="sidebar24">
@@ -66,7 +80,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
   <main class="ml-[280px] p-6" style="width:calc(100% - 280px);max-width:1280px">
 <div class="card p-4 mb-4 flex items-center justify-between no-print" style="background:#1E40AF;border:none">
       <div><h2 class="text-white font-black text-lg tracking-wide">TRUNG TÂM ĐÀO TẠO LÁI XE</h2><p class="text-xs" style="color:#BFDBFE">Bảng điều khiển tổng quan</p></div>
-      <div class="flex items-center gap-3 text-white text-sm"><span class="px-3 py-2 rounded-lg" style="background:rgba(255,255,255,.15)">📅 Tháng 10 2026</span><span class="font-semibold">👤 Nguyễn Minh Anh</span><button class="px-3 py-2 rounded-lg font-semibold" style="background:#fff;color:#1E40AF" onclick="showTab('caidat')">⚙ Cài đặt</button></div>
+      <div class="flex items-center gap-3 text-white text-sm"><span class="pc px-3 py-2 rounded-lg" style="background:rgba(255,255,255,.15)">📅 Tháng 10 2026</span><span class="pc font-semibold">👤 Nguyễn Minh Anh</span><button class="px-3 py-2 rounded-lg font-semibold" style="background:#fff;color:#1E40AF" onclick="showTab('caidat')">⚙ Cài đặt</button></div>
     </div>
         <!-- FILTER 3 CẤP -->
     <div class="card p-4 mb-4 flex gap-3 no-print">
@@ -307,15 +321,6 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
   </main>
 </div>
 
-<!-- ============ MOBILE ============ -->
-<div class="md:hidden p-4 space-y-4">
-  <div class="card p-4"><h2 class="font-bold">📊 Tổng quan hôm nay</h2><p class="text-sm" id="mobileLich">Đang tải…</p></div>
-  <div class="card p-4" style="background:#F0FDF4"><h3 class="font-bold" style="color:#166534">✅ HV Có Bằng <span id="mobileCb">…</span></h3><p class="text-sm">Số liệu thật từ Sheet HocVienCoBang</p><button class="mt-2 w-full py-3 rounded-lg text-white font-bold" style="background:#16A34A" onclick="document.getElementById('maHVCoBang')?.focus();window.scrollTo(0,document.body.scrollHeight)">+ Nhập có bằng</button></div>
-  <div class="card p-4" style="border-left:4px solid #DC2626"><b>🚨 Mô phỏng:</b> 102/120h (85%) thiếu 18h, hạn 20/01/2026</div>
-  <div class="card p-4" style="border-left:4px solid #DC2626"><b>🚨 Giấy phép GV:</b> 12/10 HV (120%) vượt 2</div>
-  <div class="card p-4" style="border-left:4px solid #DC2626"><b>🚨 Niên hạn xe:</b> 51C-78901 quá niên hạn 15y3m — CẤM • 15tr</div>
-  <div id="mobileCoBang"></div>
-</div>
 <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-2 text-xs no-print" style="z-index:50">
   <button onclick="showTab('dashboard')">📊<br>Tổng quan</button><button onclick="loadModule('LichTheoKhoa')">📅<br>Lịch</button><button onclick="loadModule('HocVien')">👨‍🎓<br>Học viên</button><button style="color:#16A34A;font-weight:700" onclick="showTab('cobang')">✅<br>Có bằng</button><button onclick="showTab('caidat')">⚙️<br>Cài đặt</button>
 </nav>
@@ -389,6 +394,8 @@ function renderXe(){ loadModule('XeTapLai'); }
 
 async function apiPost(body){ if(API_URL.includes('DEPLOY_ID')) throw new Error('demo'); const r=await fetch(API_URL,{method:'POST',body:JSON.stringify(body)}); return r.json(); }
 async function apiGet(q){ if(API_URL.includes('DEPLOY_ID')) throw new Error('demo'); const r=await fetch(API_URL+'?'+q); return r.json(); }
+function toggleSidebar(force){ const a=document.querySelector('aside'); const o=document.getElementById('sbOverlay'); if(!a) return; const open=(typeof force==='boolean')?force:!a.classList.contains('open'); a.classList.toggle('open',open); if(o) o.classList.toggle('hidden',!open); }
+document.addEventListener('click',function(e){ if(e.target.closest && e.target.closest('#sidebar24 .navbtn')) toggleSidebar(false); });
 function showTab(tab, btn){
   ['dashboard','module','cobang','caidat','hoso','ketqua','thuchi','baocao','inan','canhbao','lichtuan'].forEach(t=>{ const el=document.getElementById('view-'+t); if(el) el.classList.toggle('hidden', t!==tab); });
   document.querySelectorAll('#sidebar24 .navbtn').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active');
