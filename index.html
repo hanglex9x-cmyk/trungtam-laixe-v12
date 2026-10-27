@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Trung Tâm Đào Tạo Lái Xe - V12.2 Final 24 Module</title>
+<title>Trung Tâm Đào Tạo Lái Xe - V12.2 Final 23 Module</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -46,9 +46,9 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
   <aside class="w-[280px] min-h-screen bg-white p-4 fixed overflow-y-auto no-print" style="max-height:100vh">
     <button class="md:hidden float-right text-2xl leading-none px-2" onclick="toggleSidebar(false)" aria-label="Đóng menu">✕</button>
     <h1 class="font-bold text-[#1E40AF] text-xl">🚗 TRUNG TÂM LÁI XE</h1>
-    <p class="text-xs" style="color:#65676B">V12.2 Final • 24 Module • Đa TT Sát Hạch</p>
+    <p class="text-xs" style="color:#65676B">V12.2 Final • 23 Module • Đa TT Sát Hạch</p>
     <div class="mt-5 space-y-1" id="sidebar24">
-      <button class="navbtn active" onclick="showTab('dashboard',this)">📊 21. Lịch tổng quan Sếp</button>
+      <button class="navbtn active" onclick="showTab('dashboard',this)">📊 20. Lịch tổng quan Sếp</button>
       <button class="navbtn" onclick="loadModule('TrungTamSatHach',this)">🏢 TT Sát Hạch (TT01 30% • TT02 25% • TT03 28%)</button>
       <button class="navbtn" onclick="showLichTuan(this)">🗓️ Lịch Tuần HV + GV</button>
       <button class="navbtn" onclick="loadModule('KhoaHoc',this)">📚 1. Khóa học</button>
@@ -57,23 +57,22 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
       <button class="navbtn" onclick="loadModule('KiemTraDieuKien',this)">🔎 4. Kiểm tra điều kiện</button>
       <button class="navbtn" onclick="loadModule('BienDongHV',this)">🔄 5. Biến động HV</button>
       <button class="navbtn" onclick="loadModule('HopDong',this)">✍️ 6. Hợp đồng + Ký số</button>
-      <button class="navbtn" onclick="loadModule('HocMoPhong',this)">🖥️ 7. Mô phỏng Cabin 120h</button>
-      <button class="navbtn" onclick="loadModule('GiaoVien',this)">👨‍🏫 8. Giáo viên</button>
-      <button class="navbtn" onclick="loadModule('GiayPhepGV',this)">📜 9. Giấy phép GV</button>
-      <button class="navbtn" onclick="loadModule('LichGiaoVien',this)">📅 10. Lịch giáo viên</button>
-      <button class="navbtn" onclick="loadModule('XeTapLai',this)">🚙 11. Xe tập lái + Đăng kiểm</button>
-      <button class="navbtn" onclick="loadModule('NienHanXe',this)">⏳ 12. Niên hạn xe</button>
-      <button class="navbtn" onclick="loadModule('LichTheoKhoa',this)">🗓️ 13. Lịch theo khóa</button>
-      <button class="navbtn" onclick="loadModule('LichChayDAT',this)">🛣️ 14. Lịch chạy DAT + GPS</button>
-      <button class="navbtn" onclick="loadModule('TongHopDAT',this)">📈 15. Tổng hợp DAT</button>
-      <button class="navbtn" onclick="loadModule('KyThi',this)">🏁 16. Kỳ thi</button>
-      <button class="navbtn" onclick="showTab('ketqua',this)">📝 17. Kết quả thi</button>
-      <button class="navbtn font-semibold" style="background:#DCFCE7;color:#16A34A" onclick="showTab('cobang',this)">✅ 18. HV Có Bằng + Zalo</button>
-      <button class="navbtn" onclick="showTab('thuchi',this)">💰 19. Thu chi — LN 170tr</button>
-      <button class="navbtn" onclick="showTab('baocao',this)">📑 20. Báo cáo Sở GTVT</button>
-      <button class="navbtn" onclick="showTab('inan',this)">🖨️ 22. In ấn</button>
-      <button class="navbtn" onclick="showTab('canhbao',this)">🚨 23. Cảnh báo tự động (12)</button>
-      <button class="navbtn" onclick="showTab('caidat',this)">⚙️ 24. Phân quyền + Lịch sử + Cấu hình</button>
+      <button class="navbtn" onclick="loadModule('GiaoVien',this)">👨‍🏫 7. Giáo viên</button>
+      <button class="navbtn" onclick="loadModule('GiayPhepGV',this)">📜 8. Giấy phép GV</button>
+      <button class="navbtn" onclick="loadModule('LichGiaoVien',this)">📅 9. Lịch giáo viên</button>
+      <button class="navbtn" onclick="loadModule('XeTapLai',this)">🚙 10. Xe tập lái + Đăng kiểm</button>
+      <button class="navbtn" onclick="loadModule('NienHanXe',this)">⏳ 11. Niên hạn xe</button>
+      <button class="navbtn" onclick="loadModule('LichTheoKhoa',this)">🗓️ 12. Lịch theo khóa</button>
+      <button class="navbtn" onclick="loadModule('LichChayDAT',this)">🛣️ 13. Lịch chạy DAT + GPS</button>
+      <button class="navbtn" onclick="loadModule('TongHopDAT',this)">📈 14. Tổng hợp DAT</button>
+      <button class="navbtn" onclick="loadModule('KyThi',this)">🏁 15. Kỳ thi</button>
+      <button class="navbtn" onclick="showTab('ketqua',this)">📝 16. Kết quả thi</button>
+      <button class="navbtn font-semibold" style="background:#DCFCE7;color:#16A34A" onclick="showTab('cobang',this)">✅ 17. HV Có Bằng + Zalo</button>
+      <button class="navbtn" onclick="showTab('thuchi',this)">💰 18. Thu chi — LN 170tr</button>
+      <button class="navbtn" onclick="showTab('baocao',this)">📑 19. Báo cáo Sở GTVT</button>
+      <button class="navbtn" onclick="showTab('inan',this)">🖨️ 21. In ấn</button>
+      <button class="navbtn" onclick="showTab('canhbao',this)">🚨 22. Cảnh báo tự động (11)</button>
+      <button class="navbtn" onclick="showTab('caidat',this)">⚙️ 23. Phân quyền + Lịch sử + Cấu hình</button>
     </div>
   </aside>
 
@@ -108,7 +107,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
             <!-- GANTT + HEATMAP + CHART -->
       <div class="grid grid-cols-3 gap-4">
         <div class="card p-4 col-span-2">
-          <h3 class="font-bold">📊 Gantt khóa học 10/2026 – 02/2027 • Lý thuyết (Hoàn thành) • Thực hành (Đang diễn ra) • Mô phỏng (Sắp tới)</h3>
+          <h3 class="font-bold">📊 Gantt khóa học 10/2026 – 02/2027 • Lý thuyết (Hoàn thành) • Thực hành (Đang diễn ra)</h3>
           <div class="mt-3 space-y-3 text-xs">
             <div><div class="flex justify-between"><span>K51 B2 • Hóc Môn</span><span>120 HV</span></div><div class="bg-gray-200 h-4 rounded"><div class="h-4 rounded" style="width:70%;background:#1E40AF"></div></div></div>
             <div><div class="flex justify-between"><span>K52 B1 • Thành Công</span><span>80 HV</span></div><div class="bg-gray-200 h-4 rounded"><div class="h-4 rounded" style="width:45%;background:#16A34A"></div></div></div>
@@ -170,7 +169,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 
     <!-- ===== VIEW: MODULE GENERIC (24 module dùng chung) ===== -->
     <section id="view-module" class="hidden">
-      <div class="tpl-band no-print"><div><h3>📋 DỮ LIỆU MODULE</h3><p>24 Module • Dữ liệu theo sheet cùng tên</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
+      <div class="tpl-band no-print"><div><h3>📋 DỮ LIỆU MODULE</h3><p>23 Module • Dữ liệu theo sheet cùng tên</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
       <div class="card p-4">
         <div class="flex justify-between items-center"><h3 class="font-bold" id="moduleTitle">Module</h3><div class="flex gap-2 no-print"><button class="px-3 py-2 rounded-lg text-white text-sm" style="background:#1E40AF" onclick="openAdd()">+ Thêm mới</button><button class="px-3 py-2 rounded-lg text-white text-sm" style="background:#16A34A" onclick="exportExcel(currentSheet)">Xuất Excel</button></div></div>
         <input id="moduleSearch" placeholder="Tìm kiếm..." class="input-48 border rounded-lg px-3 w-full mt-3" oninput="modulePage=1;renderModuleTable()">
@@ -222,7 +221,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
       <div class="card p-4">
         <h3 class="font-bold">📝 KẾT QUẢ THI — Phiếu điểm chi tiết</h3>
         <div class="mt-3 no-print"><select id="kqFilterKhoa" class="border rounded-lg p-2" onchange="paintKetQua_()"><option value="">Tất cả khóa</option><option>K51</option><option>K52</option><option>K53</option></select></div>
-        <div class="overflow-x-auto mt-3"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">LT /30</th><th class="text-left">MP /50</th><th class="text-left">SH /100</th><th class="text-left">ĐT /100</th><th class="text-left">Kết quả</th><th class="text-left">Ngày thi</th><th class="text-left">Ngày có bằng</th><th class="text-left">Số bằng</th><th class="text-left">Hành động</th></tr></thead><tbody id="ketquaBody"></tbody></table></div>
+        <div class="overflow-x-auto mt-3"><table class="w-full text-sm"><thead style="background:#F0F2F5"><tr><th class="p-2 text-left">MaHV</th><th class="text-left">LT /30</th><th class="text-left">SH /100</th><th class="text-left">ĐT /100</th><th class="text-left">Kết quả</th><th class="text-left">Ngày thi</th><th class="text-left">Ngày có bằng</th><th class="text-left">Số bằng</th><th class="text-left">Hành động</th></tr></thead><tbody id="ketquaBody"></tbody></table></div>
         <p class="text-xs mt-2" style="color:#65676B">Trượt môn nào hệ thống tự xếp lịch thi lại môn đó. Đạt + có số bằng: bấm Gửi Zalo chúc mừng để chạy capNhatCoBang → XONG xanh lá.</p>
       </div>
     </section>
@@ -332,10 +331,10 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
 /* ===== CẤU HÌNH: dán URL Web App /exec sau khi deploy Code.gs ===== */
 const API_URL = 'https://script.google.com/macros/s/AKfycbzCIJvWcjkFEGNjJTuVFGQp1zjep0vNDlMuxVc_1NsPYdHgwOuurUdLYnFBHkgF-pN4tA/exec'; // Backend THAT - Sheet QuanLy_TrungTamLaiXe_V12_2
 let currentSheet = 'HocVienCoBang', moduleRows = [];
-const SHEET_HEADERS = {"TrungTamSatHach": ["MaTT", "TenTT", "DiaChi", "SDT", "NguoiLH", "PhanTramAnChia", "TrangThai"], "KhoaHoc": ["MaKhoa", "TenKhoa", "HeSo", "MaTT_SatHach", "TenTT_SatHach", "NgayKhaiGiang", "SoHV", "TrangThai"], "HocVien": ["MaHV", "TenHV", "SDT", "NgaySinh", "MaKhoa", "HeSo", "LoaiBang", "MaTT_SatHach", "TrangThaiHoc", "CoBang", "TienDo", "MaGV", "BienSo", "NgayCoBang", "SoBang", "NhomZalo", "DaGuiZalo"], "HoSoDauVao": ["MaHV", "CCCD", "KhamSK", "Anh3x4", "DonDeNghi", "LyLich", "HanBoSung", "TrangThai"], "KiemTraDieuKien": ["MaHV", "Tuoi", "HeSoDK", "BangCu", "SoNamCoBang", "SoKMAnToan", "DuDK", "LyDo"], "BienDongHV": ["MaBD", "MaHV", "Loai", "Ngay", "LyDo", "SoTienHoan", "MaKhoaMoi", "TrangThai"], "HopDong": ["MaHDong", "MaHV", "NgayKy", "TongTien", "CamKet", "FilePDF", "ChuKySo", "TrangThai"], "HocMoPhong": ["MaHV", "GioCabinCan", "DaHoc", "ConLai", "Diem", "TrangThai", "Han"], "GiaoVien": ["MaGV", "TenGV", "SDT", "HangDay", "LuongGio", "LuongKM", "SoHVDangDay", "GioiHan", "TrangThai"], "GiayPhepGV": ["MaGV", "SoGiayPhep", "NgayCap", "Han", "SoHVDangDay", "GioiHan", "TrangThai"], "LichGiaoVien": ["MaLich", "MaGV", "Ngay", "GioBD", "GioKT", "MaHV", "BienSo", "LoaiLich", "TrangThai"], "XeTapLai": ["BienSo", "LoaiXe", "Hang", "NgayDangKiem", "HanDangKiem", "HanBaoHiem", "KMHienTai", "TrangThai", "MaGVPhuTrach", "LichSuBaoDuong", "MaKhoa", "MaTT_SatHach"], "NienHanXe": ["BienSo", "NamSX", "NienHan", "SoNamDaDung", "KMHienTai", "KMBaoDuong", "TrangThai", "ChiPhi"], "LichTheoKhoa": ["MaLichKhoa", "MaKhoa", "Ngay", "Buoi", "GioBD", "GioKT", "MonHoc", "DiaDiem", "GiaoVien", "LoaiLich"], "LichChayDAT": ["MaPhien", "MaHV", "MaGV", "BienSo", "NgayChay", "GioBD", "GioKT", "QuangDuongKM", "SoGio", "LoaiDuong", "GPS_BatDau", "GPS_KetThuc", "TrangThaiDAT"], "TongHopDAT": ["MaHV", "TongKMCan", "DaChay", "ConLai", "TongGioCan", "DaChayGio", "DuDKThi", "PhanTram", "TrangThai"], "KyThi": ["MaKyThi", "MaKhoa", "HeSo", "MaTT_SatHach", "NgayThi", "LoaiThi", "DiaDiem", "SoHV"], "KetQuaThi": ["MaHV", "DiemLT", "DanhGiaLT", "DiemMP", "DanhGiaMP", "DiemSH", "DanhGiaSH", "DiemDT", "DanhGiaDT", "KetQua", "GhiChu", "NgayThi", "NgayCoBang", "SoBang", "TrangThaiBang", "CoBang"], "HocVienCoBang": ["MaHV", "TenHV", "HeSo", "MaTT", "TenTT", "NgayThi", "NgayCoBang", "SoBang", "SoThang", "NhomZalo", "DaGuiZalo", "NgayGuiZalo", "TrangThai"], "HoaDon": ["MaHD", "MaHV", "TongTien", "DaThu", "ConLai", "TrangThai"], "ChiTietThu": ["MaPhieu", "MaHD", "NgayThu", "SoTien", "PhuongThuc", "ConLaiSauThu"], "BangLuongGV": ["Thang", "MaGV", "TenGV", "SoGioDay", "SoKMDAT", "LuongGio", "LuongKM", "TongLuong", "TrangThai"], "ChiPhi": ["MaCP", "Ngay", "LoaiChi", "NoiDung", "SoTien", "BienSo", "MaGV", "MaKhoa"], "ChiPhiLienKet": ["MaCPLK", "Thang", "MaTT_SatHach", "SoHVThi", "DoanhThu", "PhanTramAnChia", "SoTienTraTT", "TrangThai"], "PhanQuyen": ["Email", "SDT", "HoTen", "VaiTro", "TrangThai"], "LichSu": ["ThoiGian", "HanhDong", "MaDoiTuong", "NguoiThucHien", "ChiTiet"], "CauHinh": ["Khoa", "GiaTri", "GhiChu"]};
+const SHEET_HEADERS = {"TrungTamSatHach": ["MaTT", "TenTT", "DiaChi", "SDT", "NguoiLH", "PhanTramAnChia", "TrangThai"], "KhoaHoc": ["MaKhoa", "TenKhoa", "HeSo", "MaTT_SatHach", "TenTT_SatHach", "NgayKhaiGiang", "SoHV", "TrangThai"], "HocVien": ["MaHV", "TenHV", "SDT", "NgaySinh", "MaKhoa", "HeSo", "LoaiBang", "MaTT_SatHach", "TrangThaiHoc", "CoBang", "TienDo", "MaGV", "BienSo", "NgayCoBang", "SoBang", "NhomZalo", "DaGuiZalo"], "HoSoDauVao": ["MaHV", "CCCD", "KhamSK", "Anh3x4", "DonDeNghi", "LyLich", "HanBoSung", "TrangThai"], "KiemTraDieuKien": ["MaHV", "Tuoi", "HeSoDK", "BangCu", "SoNamCoBang", "SoKMAnToan", "DuDK", "LyDo"], "BienDongHV": ["MaBD", "MaHV", "Loai", "Ngay", "LyDo", "SoTienHoan", "MaKhoaMoi", "TrangThai"], "HopDong": ["MaHDong", "MaHV", "NgayKy", "TongTien", "CamKet", "FilePDF", "ChuKySo", "TrangThai"], "GiaoVien": ["MaGV", "TenGV", "SDT", "HangDay", "LuongGio", "LuongKM", "SoHVDangDay", "GioiHan", "TrangThai"], "GiayPhepGV": ["MaGV", "SoGiayPhep", "NgayCap", "Han", "SoHVDangDay", "GioiHan", "TrangThai"], "LichGiaoVien": ["MaLich", "MaGV", "Ngay", "GioBD", "GioKT", "MaHV", "BienSo", "LoaiLich", "TrangThai"], "XeTapLai": ["BienSo", "LoaiXe", "Hang", "NgayDangKiem", "HanDangKiem", "HanBaoHiem", "KMHienTai", "TrangThai", "MaGVPhuTrach", "LichSuBaoDuong", "MaKhoa", "MaTT_SatHach"], "NienHanXe": ["BienSo", "NamSX", "NienHan", "SoNamDaDung", "KMHienTai", "KMBaoDuong", "TrangThai", "ChiPhi"], "LichTheoKhoa": ["MaLichKhoa", "MaKhoa", "Ngay", "Buoi", "GioBD", "GioKT", "MonHoc", "DiaDiem", "GiaoVien", "LoaiLich"], "LichChayDAT": ["MaPhien", "MaHV", "MaGV", "BienSo", "NgayChay", "GioBD", "GioKT", "QuangDuongKM", "SoGio", "LoaiDuong", "GPS_BatDau", "GPS_KetThuc", "TrangThaiDAT"], "TongHopDAT": ["MaHV", "TongKMCan", "DaChay", "ConLai", "TongGioCan", "DaChayGio", "DuDKThi", "PhanTram", "TrangThai"], "KyThi": ["MaKyThi", "MaKhoa", "HeSo", "MaTT_SatHach", "NgayThi", "LoaiThi", "DiaDiem", "SoHV"], "KetQuaThi": ["MaHV", "DiemLT", "DanhGiaLT", "DiemSH", "DanhGiaSH", "DiemDT", "DanhGiaDT", "KetQua", "GhiChu", "NgayThi", "NgayCoBang", "SoBang", "TrangThaiBang", "CoBang"], "HocVienCoBang": ["MaHV", "TenHV", "HeSo", "MaTT", "TenTT", "NgayThi", "NgayCoBang", "SoBang", "SoThang", "NhomZalo", "DaGuiZalo", "NgayGuiZalo", "TrangThai"], "HoaDon": ["MaHD", "MaHV", "TongTien", "DaThu", "ConLai", "TrangThai"], "ChiTietThu": ["MaPhieu", "MaHD", "NgayThu", "SoTien", "PhuongThuc", "ConLaiSauThu"], "BangLuongGV": ["Thang", "MaGV", "TenGV", "SoGioDay", "SoKMDAT", "LuongGio", "LuongKM", "TongLuong", "TrangThai"], "ChiPhi": ["MaCP", "Ngay", "LoaiChi", "NoiDung", "SoTien", "BienSo", "MaGV", "MaKhoa"], "ChiPhiLienKet": ["MaCPLK", "Thang", "MaTT_SatHach", "SoHVThi", "DoanhThu", "PhanTramAnChia", "SoTienTraTT", "TrangThai"], "PhanQuyen": ["Email", "SDT", "HoTen", "VaiTro", "TrangThai"], "LichSu": ["ThoiGian", "HanhDong", "MaDoiTuong", "NguoiThucHien", "ChiTiet"], "CauHinh": ["Khoa", "GiaTri", "GhiChu"]};
 const DEMO = {
   HoSoDauVao:[{MaHV:'HV001',CCCD:'Da nop',KhamSK:'Da nop',Anh3x4:'Thieu',DonDeNghi:'Het han',LyLich:'Da nop',HanBoSung:'30/10/2026'},{MaHV:'HV1024',CCCD:'Da nop',KhamSK:'Thieu',Anh3x4:'Da nop',DonDeNghi:'Da nop',LyLich:'Thieu',HanBoSung:'30/10/2026'}],
-  KetQuaThi:[{MaHV:'HV001',DiemLT:'28/30',DanhGiaLT:'Dat',DiemMP:'45/50',DanhGiaMP:'Dat',DiemSH:'85/100',DanhGiaSH:'Dat',DiemDT:'90/100',DanhGiaDT:'Dat',KetQua:'DAT',NgayThi:'25/12/26',NgayCoBang:'10/01/27',SoBang:'B2-123456'}],
+  KetQuaThi:[{MaHV:'HV001',DiemLT:'28/30',DanhGiaLT:'Dat',DiemSH:'85/100',DanhGiaSH:'Dat',DiemDT:'90/100',DanhGiaDT:'Dat',KetQua:'DAT',NgayThi:'25/12/26',NgayCoBang:'10/01/27',SoBang:'B2-123456'}],
   HocVienCoBang:[
     {MaHV:'HV001',TenHV:'Nguyễn Văn A',HeSo:'B2',MaTT:'TT01',TenTT:'Hóc Môn',NgayCoBang:'10/01/2027',SoBang:'B2-123456',NhomZalo:'Nhom Co Bang B2 - T01/27',DaGuiZalo:'Da gui',TrangThai:'XONG'},
     {MaHV:'HV003',TenHV:'Lê Văn C',HeSo:'C',MaTT:'TT01',TenTT:'Hóc Môn',NgayCoBang:'05/12/2026',SoBang:'C-789012',NhomZalo:'Nhom Co Bang C - T12/26',DaGuiZalo:'Chua gui',TrangThai:'XONG'}],
@@ -533,7 +532,7 @@ let cbRowsCache=[];
 async function renderHocVienCoBang(){
   if(!cbRowsCache.length){
     try{ const d=await apiGet('action=getList&sheet=HocVienCoBang'); if(!d.ok) throw new Error(d.error||'API lỗi'); cbRowsCache=d.data||[]; }
-    catch(e){ document.getElementById('cobangBody').innerHTML='<tr><td class="p-3" colspan="10" style="color:#DC2626">Không tải được HocVienCoBang từ Sheet. <button class="underline font-bold" onclick="cbRowsCache=[];renderHocVienCoBang()">Thử lại</button></td></tr>'; return; }
+    catch(e){ document.getElementById('cobangBody').innerHTML='<tr><td class="p-3" colspan="9" style="color:#DC2626">Không tải được HocVienCoBang từ Sheet. <button class="underline font-bold" onclick="cbRowsCache=[];renderHocVienCoBang()">Thử lại</button></td></tr>'; return; }
   }
   paintCoBang_();
 }
@@ -614,7 +613,7 @@ function paintKetQua_(){
   let rows=kqRowsCache.slice();
   const kf=document.getElementById('kqFilterKhoa')?.value||''; const hvMap={}; (FD.hv||[]).forEach(h=>hvMap[h.MaHV]=h.MaKhoa);
   if(kf) rows=rows.filter(r=>hvMap[r.MaHV]===kf);
-  document.getElementById('ketquaBody').innerHTML=rows.map(r=>{ const dat=String(r.KetQua)==='Do'; return '<tr class="border-b"><td class="p-2">'+r.MaHV+'</td><td>'+chipDiem_(r.DiemLT,r.DanhGiaLT)+'</td><td>'+chipDiem_(r.DiemMP,r.DanhGiaMP)+'</td><td>'+chipDiem_(r.DiemSH,r.DanhGiaSH)+'</td><td>'+chipDiem_(r.DiemDT,r.DanhGiaDT)+'</td><td><b style="color:'+(dat?'#16A34A':'#DC2626')+'">'+(dat?'ĐỖ':'TRƯỢT')+'</b></td><td>'+fmtVal_('NgayThi',r.NgayThi)+'</td><td>'+fmtVal_('NgayCoBang',r.NgayCoBang)+'</td><td>'+(r.SoBang||'')+'</td><td><button class="px-2 py-1 rounded text-xs border" onclick="window.print()">In phiếu điểm</button> <button class="px-2 py-1 rounded text-xs text-white" style="background:#16A34A" onclick="guiZaloLai(\''+r.MaHV+'\')">Gửi Zalo chúc mừng</button></td></tr>'; }).join('')||'<tr><td class="p-3" colspan="10">Chưa có kết quả thi theo bộ lọc này</td></tr>';
+  document.getElementById('ketquaBody').innerHTML=rows.map(r=>{ const dat=String(r.KetQua)==='Do'; return '<tr class="border-b"><td class="p-2">'+r.MaHV+'</td><td>'+chipDiem_(r.DiemLT,r.DanhGiaLT)+'</td><td>'+chipDiem_(r.DiemSH,r.DanhGiaSH)+'</td><td>'+chipDiem_(r.DiemDT,r.DanhGiaDT)+'</td><td><b style="color:'+(dat?'#16A34A':'#DC2626')+'">'+(dat?'ĐỖ':'TRƯỢT')+'</b></td><td>'+fmtVal_('NgayThi',r.NgayThi)+'</td><td>'+fmtVal_('NgayCoBang',r.NgayCoBang)+'</td><td>'+(r.SoBang||'')+'</td><td><button class="px-2 py-1 rounded text-xs border" onclick="window.print()">In phiếu điểm</button> <button class="px-2 py-1 rounded text-xs text-white" style="background:#16A34A" onclick="guiZaloLai(\''+r.MaHV+'\')">Gửi Zalo chúc mừng</button></td></tr>'; }).join('')||'<tr><td class="p-3" colspan="10">Chưa có kết quả thi theo bộ lọc này</td></tr>';
 }
 
 async function renderThuChiData(){ try{ const d=await apiGet('action=getThuChi'); if(!d.ok) return; const setT=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
