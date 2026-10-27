@@ -292,7 +292,7 @@ thead th{background:#EFF6FF!important;color:#1E40AF}
     <!-- ===== VIEW: CẢNH BÁO TỰ ĐỘNG (Module 22) ===== -->
     <section id="view-canhbao" class="hidden">
       <div class="tpl-band no-print"><div><h3>🚨 CẢNH BÁO TỰ ĐỘNG</h3><p>Module 22 • checkAllCanhBao() • 11 loại cảnh báo</p></div><span class="pill">Tháng 10 2026 • Nguyễn Minh Anh</span></div>
-      <div class="card p-4"><h3 class="font-bold">🚨 CẢNH BÁO TỰ ĐỘNG — 12 LOẠI (checkAllCanhBao) <span id="canhBaoTotal"></span></h3>
+      <div class="card p-4"><h3 class="font-bold">🚨 CẢNH BÁO TỰ ĐỘNG — 11 LOẠI (checkAllCanhBao) <span id="canhBaoTotal"></span></h3>
         <div class="grid grid-cols-2 gap-3 mt-3 text-sm" id="canhBaoList">
           <div class="p-3 rounded-lg" style="background:#FEF3C7">Đang tải cảnh báo thật…</div>
         </div>
@@ -506,7 +506,7 @@ async function renderCanhBao(){
   }catch(e){ if(el) el.innerHTML='<div class="p-3 rounded-lg" style="background:#FEE2E2">Không quét được cảnh báo từ API. <button class="underline font-bold" onclick="renderCanhBao()">Thử lại</button></div>'; }
 }
 
-async function refreshAlerts(){ await renderCanhBao(); const ct=document.getElementById('canhBaoTotal'); alert('Đã quét lại 12 loại cảnh báo'+(ct&&ct.textContent?ct.textContent.replace('—',':'):'')); }
+async function refreshAlerts(){ await renderCanhBao(); const ct=document.getElementById('canhBaoTotal'); alert('Đã quét lại 11 loại cảnh báo'+(ct&&ct.textContent?ct.textContent.replace('—',':'):'')); }
 
 /* Module generic */
 let moduleToken=0, modulePage=1, pageRows=[];
